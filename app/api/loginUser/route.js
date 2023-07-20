@@ -30,6 +30,7 @@ export const POST = async (req, res) => {
         id: foundUser._id,
         email: foundUser.email,
         username: foundUser.username,
+        image: foundUser.image
       };
       const token = jwt.sign(payload, process.env.SECRET, {
         algorithm: "HS256",

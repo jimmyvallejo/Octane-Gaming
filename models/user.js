@@ -18,13 +18,14 @@ const UserSchema = new Schema(
     },
     image: {
       type: String,
+      default: "https://www.svgrepo.com/show/211752/gamer.svg",
     },
     password: {
       type: String,
       required: true,
     },
     videos: [{ type: Schema.Types.ObjectId, ref: "Video" }],
-    liked: [{ type: Schema.Types.ObjectId, ref: "Video" }]
+    liked: [{ type: Schema.Types.ObjectId, ref: "Video" }],
   },
   {
     timeseries: true,

@@ -11,17 +11,16 @@ import { baseUrl } from "@utils/baseUrl";
 import { TextField } from "@mui/material";
 
 
+
 const Dropzone = ({ className }) => {
   const [files, setFiles] = useState([]);
   const [rejected, setRejected] = useState([]);
-  const [name, setName] = useState("")
+  const [description, setDescription] = useState("")
   const { authUser } = useContext(AuthContext)
 
   const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
     if (acceptedFiles?.length) {
       setFiles((previousFiles) => [
-        // If allowing multiple files
-        // ...previousFiles,
         ...acceptedFiles.map((file) =>
           Object.assign(file, { preview: URL.createObjectURL(file) })
         ),
@@ -92,9 +91,11 @@ const Dropzone = ({ className }) => {
     console.log("Post to Cloudinary:" ,result.data)
     
      const videoObj = {
-        owner: authUser.id,
+        ownerId: authUser.id,
+        ownerName : authUser.username,
         url: result.data.url,
-        name: name
+        description: description,
+        image: authUser.image
      }
 
      console.log("VideoObj:", videoObj)
@@ -103,7 +104,7 @@ const Dropzone = ({ className }) => {
     const dbResult = postedToDb.data
 
     console.log("DbResult:", dbResult)
-     setName("")
+     setDescription("")
      removeFile(files[0].name);
     } catch (error) {
          if (error.response) {
@@ -122,8 +123,8 @@ const Dropzone = ({ className }) => {
 
 
   return (
-    <div className=" max-w-xl">
-      <h1 className="text-3xl font-bold text-center">Upload Files</h1>
+    <div className=" max-w-xl flex flex-col items-center">
+      <Image src={`https://www.svgrepo.com/show/366049/upload.svg`} width={80} height={80} alt="upload" />
       <form
         className="uploadForm py-10"
         onSubmit={handleSubmit}
@@ -150,10 +151,10 @@ const Dropzone = ({ className }) => {
           <div className=" flex justify-center">
             <TextField
               variant="filled"
-              label="Name"
-              onChange={(e) => setName(e.target.value)}
+              label="Description"
+              onChange={(e) => setDescription(e.target.value)}
               className="mb-4 text-red-500"
-              value={name}
+              value={description}
               sx={{
                 "& .MuiFilledInput-root": {
                   borderColor: "white",
@@ -170,8 +171,8 @@ const Dropzone = ({ className }) => {
                 "& .MuiFormLabel-root": {
                   color: "white",
                 },
+                width: "480px",
               }}
-             
             />
           </div>
           <div className="flex mt-10 gap-4">

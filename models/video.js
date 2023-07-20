@@ -2,15 +2,22 @@ import { Schema, model, models } from "mongoose";
 
 const VideoSchema = new Schema(
   {
-    owner: {
+    ownerId: {
       type: String,
       unique: true,
+    },
+    ownerName: {
+      type: String,
+      unique: true,
+    },
+    image: {
+       type: String
     },
     url: {
       type: String,
       unique: true,
     },
-    name: {
+    description: {
       type: String,
     },
     views: {
@@ -19,7 +26,7 @@ const VideoSchema = new Schema(
     likes: {
       type: Number,
     },
-     comments: [{ type: Schema.Types.ObjectId, ref: "Comment"}]
+    comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
   },
   {
     timeseries: true,

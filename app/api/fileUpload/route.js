@@ -2,26 +2,32 @@ import Video from "@models/video"
 import User from "@models/user";
 import { connectToDB } from "@utils/database";
 export const POST = async (req) => {
-    const {name, url, owner} = await req.json()
+    const {description, url, ownerId, ownerName, image} = await req.json()
+    console.log(ownerId)
+    console.log(ownerName)
 
      try {
         await connectToDB();
 
-     if (!name || !url || !owner) {
+     if (!description || !url || !ownerId) {
        return new Response("Upload to Db failed.", { status: 400 });
      }
 
       
      const newVideo = await Video.create({
-       owner,
-       name,
+      image, 
+       ownerId,
+       ownerName,
+       description,
        url,
        likes: 0,
        views: 1
      });
 
+    
+
      const updatedArray = await User.findByIdAndUpdate(
-       owner,
+       ownerId,
        { $push: { videos: newVideo._id } },
        { new: true }
      );

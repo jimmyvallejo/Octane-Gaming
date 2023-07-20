@@ -33,3 +33,21 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+.nav {
+  background-color: #24272c;
+  z-index: 1;
+  max-height: 70px;
+  min-height: 70px;
+}
+
+.vidDet {
+  width: 750px;
+  border-bottom: 1px solid grey;
+  padding: 50px;
+  
+}
+
+.vidInfo {
+  width: 750px;
+  
+}
