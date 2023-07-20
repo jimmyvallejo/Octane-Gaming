@@ -12,17 +12,17 @@ export const POST = async (req, res) => {
     await connectToDB();
 
     if (!email || !password || !username) {
-      return new Response("Please fill out all fields", { status: 400 });
+      return new Response("Please fill out all fields.", { status: 400 });
     }
 
     const foundUsername = await User.findOne({ username });
     if (foundUsername) {
-      return new Response("Username is already taken");
+      return new Response("Username is already taken.", {status: 401});
     }
 
     const foundEmail = await User.findOne({ email });
     if (foundEmail) {
-      return new Response("Email is already taken");
+      return new Response("Email is already taken.", {status: 401});
     }
 
     const salt = bcrypt.genSaltSync(saltRounds);
@@ -51,6 +51,6 @@ export const POST = async (req, res) => {
   } catch (error) {
     console.log(error);
 
-    return new Response("Failed to create a new User", { status: 500 });
+    return new Response("Failed to create a new User.", { status: 500 });
   }
 };
