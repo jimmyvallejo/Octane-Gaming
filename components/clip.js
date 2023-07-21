@@ -1,9 +1,43 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import ReactPlayer from "react-player";
+import axios from 'axios';
+import { baseUrl } from '@utils/baseUrl';
+import { AuthContext } from './authProvider';
+import { useContext } from 'react';
+
 
 export const Clip = ({clip}) => {
+  const {authUser} = useContext(AuthContext)
+  const [views, setViews] = useState(clip.views)
+ 
+  const handleView = async () => {
+    console.log(clip)
+    try {
+      let updatedView = await axios.post(`${baseUrl}api/addView`, {clipId: clip._id})
+      setViews(updatedView.data)
+      
+    } catch (error){
+      console.log(error)
+    }
+  }
+
+  const handleLike = async () => {
+    
+    try {
+      const idData = {
+        clipId: clip._id,
+        userId: authUser.id
+      }   
+
+      let updatedLike = await axios.post(`${baseUrl}api/addLike`, idData)
+    } catch (error) {
+       console.log(error)
+    }
+  }
+ 
+ 
   return (
     <div className="flex flex-col ">
       <div className=" flex flex-col items-center ">
@@ -13,6 +47,7 @@ export const Clip = ({clip}) => {
             width={`760px`}
             height={`480px`}
             controls={true}
+            onPlay={handleView}
           />
         </div>
         <div className="flex flex-row justify-between w-[33%]">
@@ -24,7 +59,7 @@ export const Clip = ({clip}) => {
               alt="views"
               className="mr-2"
             />
-            <h3 className="text-xl">{clip.views}</h3>
+            <h3 className="text-xl">{views}</h3>
           </div>
           <div className="flex flex-row items-center">
             <Image
