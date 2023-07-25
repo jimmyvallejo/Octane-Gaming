@@ -39,27 +39,17 @@ body {
   }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-color: #121212;
+  color: white;
 }
 
 .nav {
-  background-color: #24272c;
+  background-color: #121212;
   z-index: 1;
-  max-height: 70px;
-  min-height: 70px;
+  max-height: 60px;
+  min-height: 60px;
 }
 
-.container {
-  /* overflow-y: auto;
-  overscroll-behavior-y: contain;
-  scroll-snap-type: y mandatory; */
-}
 
 .vidDet {
   width: 750px;
@@ -118,3 +108,61 @@ body {
   margin-top:  80px;
 }
 
+@keyframes fadeInTop {
+  0% {
+    opacity: 0;
+    transform: translateY(-80px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-top {
+ animation: fadeInTop 1s forwards;
+}
+
+@keyframes fadeOutTop {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(80px);
+  }
+}
+
+.spinner {
+  transition: all 0.3s linear;
+}
+
+.spinner:hover {
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+.fade-out-top {
+ animation: fadeOutTop 1s forwards;
+}
+
+.loader {
+  width: 780;
+  height: 500;
+  background-color: black;
+  border: #928f8f;
+}
+
+.drawer {
+  background-color: #171717;
+}
+
+.followbutton {
+  color: "#6c0736" !important;
+}

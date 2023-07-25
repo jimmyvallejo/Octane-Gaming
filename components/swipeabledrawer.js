@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import Box from "@mui/material/Box";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
@@ -6,8 +6,12 @@ import Button from "@mui/material/Button";
 import { InputAdornment, TextField } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Image from "next/image";
- import Comment from "./CommentContain";
- import { useEffect, useState } from "react";
+import Comment from "./CommentContain";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useTheme} from '@mui/material/styles'
+import theme from "./materialUi/materialUi";
+import { Opacity } from "@mui/icons-material";
 
 export default function SwipeableTemporaryDrawer({
   handleComment,
@@ -17,10 +21,17 @@ export default function SwipeableTemporaryDrawer({
   using,
   setUsing,
   clip,
+  authUser,
+  comment
+  
 }) {
+  const [updatedClip, setUpdatedClip] = useState(null);
 
+  const themed = useTheme(theme);
 
-const [updatedClip, setUpdatedClip] = useState(null);
+  useEffect(() => {
+    console.log(themed)
+  },[themed])
 
   const [state, setState] = useState({
     top: false,
@@ -29,15 +40,13 @@ const [updatedClip, setUpdatedClip] = useState(null);
     right: false,
   });
 
-     useEffect(() => {
-       setUpdatedClip(clip);
-     }, []);
+  useEffect(() => {
+    setUpdatedClip(clip);
+  }, []);
 
-     useEffect(() => {
-       console.log("updated clip:", updatedClip);
-     }, [updatedClip]);
-
-     
+  useEffect(() => {
+    console.log("updated clip:", updatedClip);
+  }, [updatedClip]);
 
   const anchor = "bottom";
 
@@ -65,9 +74,9 @@ const [updatedClip, setUpdatedClip] = useState(null);
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
-      className="flex justify-center flex-col items-center bg-black"
+      className="flex justify-center flex-col items-center drawer pt-5 pb-5"
     >
-      <h1>Add comment</h1>
+      <h1 className="text-gray-300 pb-3 text-xl">Add comment</h1>
       <div className="flex w-full items-center justify-center">
         <TextField
           onChange={(e) => setCommentText(e.target.value)}
@@ -93,7 +102,7 @@ const [updatedClip, setUpdatedClip] = useState(null);
             },
           }}
           value={commentText}
-          className="w-[50%] bg-gray-800 text-whitetext-xl rounded-lg text-white mb-5 ml-5"
+          className="w-[50%] bg-gray-800 text-whitetext-xl rounded-lg text-white mb-5 ml-5 rounded-md"
         />
         <Image
           src={"https://www.svgrepo.com/show/286913/close-error.svg"}
@@ -108,21 +117,41 @@ const [updatedClip, setUpdatedClip] = useState(null);
   );
 
   return (
-    <div className="flex justify-start mb-5  min-w-[40%] max-w-[40%] mt-10 flex-col min-h-[70%] rounded-lg pt-2 ">
+    <div
+      className={`flex justify-start mb-5  min-w-[40%] max-w-[40%] mt-10 flex-col min-h-[70%] rounded-lg pt-2 fade-in-top`}
+    >
       {updatedClip !== null && (
-        <div className="overflow-y-scroll w-full  h-[50%] rounded-md flex flex-col commentContain ">
-          {updatedClip.comments.map((comment, index) => {
-            return <Comment key={comment._id} comment={comment} />;
+        <div
+          className={`overflow-y-scroll w-full  h-[50%] rounded-md flex flex-col commentContain  `}
+        >
+          {updatedClip.comments.map((comments, index) => {
+            return (
+              <Comment
+                key={comment._id}
+                comments={comments}
+                authUser={authUser}
+              />
+            );
           })}
         </div>
       )}
       <>
-        <Button
-          className="text-lg text-white mt-3 pt-3"
-          onClick={toggleDrawer(anchor, true)}
-        >
-          Add a comment
-        </Button>
+        {authUser ? (
+          <Button
+            className="text-lg text-white mt-3 pt-3 border"
+            style={{ backgroundColor: "#630330",  }}
+            onClick={toggleDrawer(anchor, true)}
+          >
+            Add a comment
+          </Button>
+        ) : (
+          <Link
+            className="text-lg text-white mt-3 pt-3 flex justify-center"
+            href={"/login"}
+          >
+            Sign in to comment
+          </Link>
+        )}
         <SwipeableDrawer
           anchor={anchor}
           open={state[anchor]}

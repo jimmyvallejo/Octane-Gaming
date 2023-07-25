@@ -2,24 +2,28 @@
 import Link from "next/link";
 import React, { use } from "react";
 import { AuthContext } from "./authProvider";
+import { ClipContext } from "./clipProvider";
 import { useContext } from "react";
 import Image from "next/image";
-import { Container, InputAdornment, TextField } from "@mui/material";
+import {  InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { get } from "mongoose";
 
 const Nav = () => {
   const { changeLogout, authUser } = useContext(AuthContext);
+  const {getRandomClips} = useContext(ClipContext)
 
   return (
-    <div className="flex fixed bg-gray-600 nav items-center">
+    <div className="flex fixed nav items-center border-b border-gray-500 border-opacity-40">
       <div className="flex justify-between items-center  w-screen">
         <Link className="" href="/">
           <Image
             src="/assets/images/Screenshot from 2023-07-18 13-52-00.png"
             width={110}
             height={80}
-            className="ml-5 rounded-md"
+            className="ml-2 rounded-md"
             alt="logo"
+            onClick={getRandomClips}
           />
         </Link>
         <div>
@@ -28,7 +32,7 @@ const Nav = () => {
             type="search"
             sx={{
               width: 450,
-              height: 45,
+              height: 40,
               backgroundColor: "#a9a9a9",
               borderRadius: "50px",
 
@@ -49,7 +53,7 @@ const Nav = () => {
             }}
             InputProps={{
               endAdornment: (
-                <InputAdornment position="end" sx={{ marginBottom: 1 }}>
+                <InputAdornment position="end" sx={{ marginBottom: 2 }}>
                   <SearchIcon />
                 </InputAdornment>
               ),

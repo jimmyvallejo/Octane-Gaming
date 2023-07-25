@@ -8,6 +8,7 @@ import { AuthContext } from "./authProvider";
 import { ClipContext } from "./clipProvider";
 import { useContext } from "react";
 import SwipeableTemporaryDrawer from "./swipeabledrawer";
+import { Button } from "@mui/material";
 
 export const Clip = ({
   clip,
@@ -19,7 +20,7 @@ export const Clip = ({
 }) => {
   const { authUser } = useContext(AuthContext);
   const [clipCurrent, setClipCurrent] = useState(clip);
-  const { getClips, getRandomClips } = useContext(ClipContext);
+  const { loading } = useContext(ClipContext);
   const [views, setViews] = useState(clipCurrent.views);
   const [likes, setLikes] = useState(clipCurrent.likes.length);
   const [commentlength, setCommentLength] = useState(
@@ -31,6 +32,7 @@ export const Clip = ({
   const playerRef = useRef(null);
   const [commentText, setCommentText] = useState("");
   const [using, setUsing] = useState(null);
+  const [followed, setFollowed] = useState(false);
 
   const handleView = async () => {
     console.log(clip);
@@ -53,12 +55,12 @@ export const Clip = ({
 
       let updatedLike = await axios.post(`${baseUrl}api/addLike`, idData);
       console.log(updatedLike);
-      if(updatedLike.data.removed === false){
-      setLikes(prevLikes => prevLikes - 1);
-      setHeart(true)
+      if (updatedLike.data.removed === false) {
+        setLikes((prevLikes) => prevLikes + 1);
+        setHeart(true);
       } else {
-        setLikes(prevLikes => prevLikes + 1)
-        setHeart(null)
+        setLikes((prevLikes) => prevLikes - 1);
+        setHeart(null);
       }
 
       setHeart(!heart);
@@ -123,13 +125,10 @@ export const Clip = ({
     };
   }, [playing]);
 
-  const count = refresh;
-
   const handleNewVids = () => {
     handleTop();
     setComment(null);
     setTimeout(() => {
-      getRandomClips();
       refreshCount((count) => count + 1);
     }, 1000);
   };
@@ -137,17 +136,21 @@ export const Clip = ({
   return (
     <div className="flex flex-col h-screen justify-center snap-y snap-mandatory snap-center relative items-center ">
       <div className=" flex flex-col items-center ">
-        <div>
-          <ReactPlayer
-            url={clip.url}
-            width={`780px`}
-            height={`500px`}
-            controls={true}
-            onPlay={handleView}
-            ref={playerRef}
-            playing={playing}
-          />
-        </div>
+        {!loading ? (
+          <div className="pt-20">
+            <ReactPlayer
+              url={clip.url}
+              width={`780px`}
+              height={`500px`}
+              controls={true}
+              onPlay={handleView}
+              ref={playerRef}
+              playing={playing}
+            />
+          </div>
+        ) : (
+          <div className="loader"></div>
+        )}
         <div
           className={`flex mt-4 flex-row justify-between w-[90%] ${
             comment && ""
@@ -155,11 +158,11 @@ export const Clip = ({
         >
           <div className={`mr-2 flex flex-row items-center`}>
             <Image
-              src={`https://www.svgrepo.com/show/197325/eye.svg`}
+              src="/assets/images/play-button.png"
               width={25}
               height={25}
               alt="views"
-              className={`mr-2 `}
+              className={`mr-3 `}
             />
             <h3 className="text-xl">{views}</h3>
           </div>
@@ -167,7 +170,7 @@ export const Clip = ({
             {authUser && (
               <Image
                 src={
-                 !heart
+                  !heart
                     ? `https://www.svgrepo.com/show/513311/heart.svg`
                     : `https://www.svgrepo.com/show/397697/red-heart.svg`
                 }
@@ -185,25 +188,24 @@ export const Clip = ({
                 height={25}
                 alt="likes"
                 className="mr-2"
-
               />
             )}
             <h3 className="text-xl">{likes}</h3>
-          </div>
-          <div className="flex flex-row items-center">
-            <Image
-              src={
-                !comment
-                  ? `https://www.svgrepo.com/show/336550/comment.svg`
-                  : `https://www.svgrepo.com/show/40746/close.svg`
-              }
-              width={!comment ? 35 : 25}
-              height={!comment ? 35 : 25}
-              alt="comments"
-              className="mr-2 cursor-pointer"
-              onClick={handleComment}
-            />
-            <h3 className="text-xl">{commentlength}</h3>
+            <div className="flex flex-row items-center ml-5">
+              <Image
+                src={
+                  !comment
+                    ? `https://www.svgrepo.com/show/485336/comment-balloon-part-3.svg`
+                    : `https://www.svgrepo.com/show/273966/close.svg`
+                }
+                width={!comment ? 25 : 28}
+                height={!comment ? 25 : 28}
+                alt="comments"
+                className="mr-2 cursor-pointer"
+                onClick={handleComment}
+              />
+              <h3 className="text-xl">{commentlength}</h3>
+            </div>
           </div>
         </div>
 
@@ -221,12 +223,27 @@ export const Clip = ({
                 alt="user picture"
                 className="mr-5 "
               />
-              <div className="min-w-[90%] max-w-[90%]">
+              <div className="min-w-[87%] max-w-[87%]">
                 <h1>{clip.ownerName}</h1>
                 <p className="mt-2">{clip.description}</p>
               </div>
             </div>
-            <button className="ml-4">Follow</button>
+            {authUser && <Button
+              className="mr-5 h-10 mt-2 followbutton"
+              variant={!followed ? "outlined" : "outlined"}
+              sx={{
+                borderColor: !followed ? "#6c0736" : "default",
+                ":hover": {
+                  borderColor: !followed ? "default" : "#6c0736",
+                },
+                color: !followed ? "white" : "white",
+                backgroundColor: !followed ? "#6c0736" : "#6c0736",
+              }}
+              onClick={() => setFollowed(!followed)}
+            >
+              {!followed ? "Follow" : "Unfollow"}
+            </Button>
+              }
           </div>
         ) : (
           <div className="border-b w-[90%] mt-10 pt-5 mb-3"></div>
@@ -243,6 +260,7 @@ export const Clip = ({
           using={using}
           setUsing={setUsing}
           clip={clipCurrent}
+          authUser={authUser}
         />
       ) : (
         <div></div>
@@ -250,10 +268,10 @@ export const Clip = ({
       {index === lastClip ? (
         <div className="flex ">
           <Image
-            src={"https://www.svgrepo.com/show/61856/refresh.svg"}
+            src={"https://www.svgrepo.com/show/274026/refresh.svg"}
             width={40}
             height={40}
-            className="pt-20 cursor-pointer"
+            className="mt-20 cursor-pointer spinner"
             onClick={() => handleNewVids()}
             alt="refresh"
           ></Image>
