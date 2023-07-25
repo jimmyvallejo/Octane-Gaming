@@ -23,6 +23,21 @@ body {
   }
 }
 
+@layer utilities {
+    @variants responsive {
+   
+      .no-scrollbar::-webkit-scrollbar {
+          display: none;
+      }
+
+  
+      .no-scrollbar {
+          -ms-overflow-style: none;  
+          scrollbar-width: none;  
+      }
+    }
+  }
+
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
@@ -40,10 +55,18 @@ body {
   min-height: 70px;
 }
 
+.container {
+  /* overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scroll-snap-type: y mandatory; */
+}
+
 .vidDet {
   width: 750px;
   border-bottom: 1px solid grey;
-  padding: 50px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  padding-right: 10px;
   
 }
 
@@ -51,3 +74,47 @@ body {
   width: 750px;
   
 }
+
+.commentcontain {
+  height: 200px ;
+}
+
+.drawerClosed {
+  width: 0;
+  transition: width 0.5s ease-in-out;
+}
+
+.drawerOpen {
+  width: 100%;
+  transition: width 0.5s ease-in-out;
+}
+
+.commentContain {
+  overflow-y: scroll;
+  scrollbar-color: #c7cfcb #e0e0e0;
+  scrollbar-width: thin;
+  background-color: #171717;
+  
+}
+
+
+.commentContain::-webkit-scrollbar, .chatSend::-webkit-scrollbar, .provider::-webkit-scrollbar {
+  width: 5px;
+  background-color: #c7cfcb;
+  border-radius: 8px;
+  height: 90%;
+  /* margin-top:  80px; */
+}
+
+.commentContain::-webkit-scrollbar-track, .chatSend::-webkit-scrollbar-track, .provider::-webkit-scrollbar-track {
+  background: #44403C;
+  /* margin-top:  80px; */
+ 
+}
+
+.commentContain::-webkit-scrollbar-thumb, .chatSend::-webkit-scrollbar-thumb, .provider::-webkit-scrollbar-thumb {
+  background-color: #928f8f;
+  border-radius: 10px;
+  margin-top:  80px;
+}
+

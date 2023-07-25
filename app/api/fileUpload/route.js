@@ -20,8 +20,9 @@ export const POST = async (req) => {
        ownerName,
        description,
        url,
-       likes: 0,
-       views: 1
+       likes: [],
+       views: 1,
+       comments: []
      });
 
     

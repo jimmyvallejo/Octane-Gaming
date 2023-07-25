@@ -7,11 +7,15 @@ const CommentSchema = new Schema(
     },
     owner: {
       type: String,
-      unique: true,
     },
-    likes: {
-      type: Number,
-    },replies: [{ type: Schema.Types.ObjectId, ref: "Comment" }]
+    ownerName :{
+      type: String
+    },
+    ownerPic : {
+      type:String
+    },
+    likes: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    replies: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
   },
   {
     timeseries: true,
@@ -19,6 +23,5 @@ const CommentSchema = new Schema(
   }
 );
 
-const Comment = models.Comment || model("Comment", CommentSchema);
-
-export default Comment;
+   const Comment = models.Comment || model("Comment", CommentSchema);
+   export default Comment;

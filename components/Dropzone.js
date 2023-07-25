@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState, useContext } from "react";
 import { AuthContext } from "./authProvider";
+import { ClipContext } from "./clipProvider";
 import { useDropzone } from "react-dropzone";
 import { ArrowUpTrayIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
@@ -17,6 +18,7 @@ const Dropzone = ({ className }) => {
   const [rejected, setRejected] = useState([]);
   const [description, setDescription] = useState("")
   const { authUser } = useContext(AuthContext)
+  const {setuploadCount} = useContext(ClipContext)
 
   const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
     if (acceptedFiles?.length) {
@@ -104,7 +106,8 @@ const Dropzone = ({ className }) => {
     const dbResult = postedToDb.data
 
     console.log("DbResult:", dbResult)
-     setDescription("")
+    setuploadCount(count => count + 1) 
+    setDescription("")
      removeFile(files[0].name);
     } catch (error) {
          if (error.response) {

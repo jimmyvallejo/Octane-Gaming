@@ -12,12 +12,12 @@ const Nav = () => {
 
   return (
     <div className="flex fixed bg-gray-600 nav items-center">
-      <div className="flex justify-between  w-screen">
+      <div className="flex justify-between items-center  w-screen">
         <Link className="" href="/">
           <Image
             src="/assets/images/Screenshot from 2023-07-18 13-52-00.png"
-            width={100}
-            height={50}
+            width={110}
+            height={80}
             className="ml-5 rounded-md"
             alt="logo"
           />
