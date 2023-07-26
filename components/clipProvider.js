@@ -27,6 +27,7 @@ const ClipProvider = ({ children }) => {
     const getRandomClips = async () => {
       try {
         setLoading(true)
+        setClips([])
         const result = await axios.get(`${baseUrl}api/getClips`);
         console.log(result.data);
 
@@ -44,6 +45,7 @@ const ClipProvider = ({ children }) => {
       const getClips = async () => {
         try {
            setLoading(true);
+           setClips([])
           const result = await axios.get(`${baseUrl}api/getClips`);
          
           let clipsArray = result.data.clips.slice(0, 9).reverse();

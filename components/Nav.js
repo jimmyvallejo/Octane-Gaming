@@ -7,7 +7,7 @@ import { useContext } from "react";
 import Image from "next/image";
 import {  InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { get } from "mongoose";
+
 
 const Nav = () => {
   const { changeLogout, authUser } = useContext(AuthContext);
@@ -20,8 +20,8 @@ const Nav = () => {
           <Image
             src="/assets/images/Screenshot from 2023-07-18 13-52-00.png"
             width={110}
-            height={80}
-            className="ml-2 rounded-md"
+            height={85}
+            className=" rounded-md"
             alt="logo"
             onClick={getRandomClips}
           />

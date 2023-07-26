@@ -35,7 +35,7 @@ const Login = () => {
   },[error])
 
   return (
-    <div className="text-white flex items-center flex-col text-2xl text-red-500 pt-10">
+    <div className="text-white flex items-center flex-col text-2xl text-red-500 pt-20">
       <h1 className="mb-5">Login</h1>
       <div>
         <TextField

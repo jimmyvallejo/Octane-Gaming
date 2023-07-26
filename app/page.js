@@ -2,8 +2,7 @@
 import { Clip } from "@components/Clip";
 import { useContext, useState, useRef, useEffect} from "react";
 import { ClipContext } from "@components/clipProvider";
-import { ThemeProvider } from "styled-components";
-import theme from "@components/materialUi/materialUi";
+
 
 
 const Home = () => {
@@ -17,7 +16,7 @@ const Home = () => {
   const handleTop = () => {
  divRef.current.scrollTo({ top: 0, behavior: 'smooth' });
   }
-
+  
 
     useEffect(() => {
       if (refresh > 0) {
@@ -26,7 +25,7 @@ const Home = () => {
     }, [refresh]);
 
   return (
-    <ThemeProvider theme={theme}>
+    
       <section>
         <div
           className=" relative overflow-y-auto overscroll-y-contain snap-y
@@ -48,7 +47,7 @@ const Home = () => {
           })}
         </div>
       </section>
-    </ThemeProvider>
+ 
   );
   
 };

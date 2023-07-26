@@ -137,7 +137,7 @@ export const Clip = ({
     <div className="flex flex-col h-screen justify-center snap-y snap-mandatory snap-center relative items-center ">
       <div className=" flex flex-col items-center ">
         {!loading ? (
-          <div className="pt-20">
+          <div className="pt-5">
             <ReactPlayer
               url={clip.url}
               width={`780px`}
@@ -237,7 +237,7 @@ export const Clip = ({
                   borderColor: !followed ? "default" : "#6c0736",
                 },
                 color: !followed ? "white" : "white",
-                backgroundColor: !followed ? "#6c0736" : "#6c0736",
+                
               }}
               onClick={() => setFollowed(!followed)}
             >
