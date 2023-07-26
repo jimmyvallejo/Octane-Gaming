@@ -58,6 +58,7 @@ const Nav = () => {
                 </InputAdornment>
               ),
             }}
+            className="ml-5"
           />
         </div>
         {!authUser ? (
