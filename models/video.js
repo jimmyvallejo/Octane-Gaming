@@ -3,8 +3,8 @@ import { Schema, model, models } from "mongoose";
 const VideoSchema = new Schema(
   {
     ownerId: {
-      type: String,
-      unique: true,
+       type: Schema.Types.ObjectId, ref: "User" ,
+     
     },
     ownerName: {
       type: String,

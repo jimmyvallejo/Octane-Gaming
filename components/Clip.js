@@ -26,13 +26,56 @@ export const Clip = ({
   const [commentlength, setCommentLength] = useState(
     clipCurrent.comments.length
   );
-  const [playing, setPlaying] = useState(null);
+  const [playing, setPlaying] = useState(true);
   const [heart, setHeart] = useState(null);
   const [comment, setComment] = useState(null);
   const playerRef = useRef(null);
   const [commentText, setCommentText] = useState("");
   const [using, setUsing] = useState(null);
   const [followed, setFollowed] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setPlaying(true);
+        } else {
+          setPlaying(false);
+          setUsing(null);
+          setComment(null);
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    if (playerRef.current) {
+      observer.observe(playerRef.current.wrapper);
+    }
+
+    return () => {
+      if (playerRef.current) {
+        observer.unobserve(playerRef.current.wrapper);
+      }
+    };
+  }, [playing]);
+
+
+  useEffect(() => {
+   console.log(clipCurrent)
+   if(authUser){
+   if(clipCurrent.ownerId.followers.includes(authUser.id)){
+    setFollowed(true)
+   } else {
+    setFollowed(false)
+   } 
+    if (clipCurrent.likes.includes(authUser.id)) {
+      setHeart(true);
+    } else {
+      setHeart(null)
+    }
+  }
+
+  },[])
 
   const handleView = async () => {
     console.log(clip);
@@ -100,37 +143,35 @@ export const Clip = ({
     }
   };
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setPlaying(true);
-        } else {
-          setPlaying(false);
-          setUsing(null);
-          setComment(null);
-        }
-      },
-      { threshold: 0.5 }
-    );
-
-    if (playerRef.current) {
-      observer.observe(playerRef.current.wrapper);
-    }
-
-    return () => {
-      if (playerRef.current) {
-        observer.unobserve(playerRef.current.wrapper);
-      }
-    };
-  }, [playing]);
-
   const handleNewVids = () => {
     handleTop();
     setComment(null);
     setTimeout(() => {
       refreshCount((count) => count + 1);
     }, 1000);
+  };
+
+  const handleFollow = async () => {
+   
+    try {
+    const credentials = {
+      clipOwner: clipCurrent.ownerId._id,
+      currentUser: authUser.id
+    }
+      
+    const follow = await axios.post(`${baseUrl}api/handleFollow`, credentials)
+
+    console.log(follow.data)
+
+    if(follow.data.removed === true){
+      setFollowed(false)
+    } else {
+      setFollowed(true)
+    }
+
+    } catch(error) {
+      console.log(error)
+    }
   };
 
   return (
@@ -228,22 +269,22 @@ export const Clip = ({
                 <p className="mt-2">{clip.description}</p>
               </div>
             </div>
-            {authUser && <Button
-              className="mr-5 h-10 mt-2 followbutton"
-              variant={!followed ? "outlined" : "outlined"}
-              sx={{
-                borderColor: !followed ? "#6c0736" : "default",
-                ":hover": {
-                  borderColor: !followed ? "default" : "#6c0736",
-                },
-                color: !followed ? "white" : "white",
-                
-              }}
-              onClick={() => setFollowed(!followed)}
-            >
-              {!followed ? "Follow" : "Unfollow"}
-            </Button>
-              }
+            {authUser && authUser.id !== clipCurrent.ownerId._id && (
+              <Button
+                className="mr-5 h-10 mt-2 followbutton"
+                variant={!followed ? "outlined" : "outlined"}
+                sx={{
+                  borderColor: !followed ? "#6c0736" : "default",
+                  ":hover": {
+                    borderColor: !followed ? "default" : "#6c0736",
+                  },
+                  color: !followed ? "white" : "white",
+                }}
+                onClick={handleFollow}
+              >
+                {!followed ? "Follow" : "Unfollow"}
+              </Button>
+            )}
           </div>
         ) : (
           <div className="border-b w-[90%] mt-10 pt-5 mb-3"></div>

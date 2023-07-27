@@ -39,6 +39,8 @@ export const POST = async (req, res) => {
       email: newUser.email,
       username: newUser.username,
       image: newUser.image,
+      following: newUser.following,
+      followers: newUser.followers
     };
 
     const token = jwt.sign(payload, process.env.SECRET, {
