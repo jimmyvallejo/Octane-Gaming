@@ -1,6 +1,6 @@
 import { connectToDB } from "@utils/database"
-import Comment from "@models/comment"
-import Video from "@models/video"
+
+import { Video } from "../models";
 
 
 
