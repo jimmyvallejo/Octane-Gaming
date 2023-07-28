@@ -18,7 +18,7 @@ export const Clip = ({
   refresh,
   handleTop,
 }) => {
-  const { authUser } = useContext(AuthContext);
+  const { authUser, setAuthUser } = useContext(AuthContext);
   const [clipCurrent, setClipCurrent] = useState(clip);
   const { loading } = useContext(ClipContext);
   const [views, setViews] = useState(clipCurrent.views);
@@ -33,6 +33,7 @@ export const Clip = ({
   const [commentText, setCommentText] = useState("");
   const [using, setUsing] = useState(null);
   const [followed, setFollowed] = useState(false);
+  
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -61,12 +62,12 @@ export const Clip = ({
 
 
   useEffect(() => {
-   console.log(clipCurrent)
+   console.log("This is authuser:",authUser)
    if(authUser){
-   if(clipCurrent.ownerId.followers.includes(authUser.id)){
-    setFollowed(true)
+   if (authUser.following.includes(clipCurrent.ownerId._id)) {
+     setFollowed(true);
    } else {
-    setFollowed(false)
+     setFollowed(false);
    } 
     if (clipCurrent.likes.includes(authUser.id)) {
       setHeart(true);
@@ -75,7 +76,7 @@ export const Clip = ({
     }
   }
 
-  },[])
+  },[authUser])
 
   const handleView = async () => {
     console.log(clip);
@@ -105,8 +106,7 @@ export const Clip = ({
         setLikes((prevLikes) => prevLikes - 1);
         setHeart(null);
       }
-
-      setHeart(!heart);
+   
     } catch (error) {
       console.log(error);
     }
@@ -165,10 +165,19 @@ export const Clip = ({
 
     if(follow.data.removed === true){
       setFollowed(false)
+      const updatedAuthUser = { ...authUser };
+      const indexToRemove = updatedAuthUser.following.indexOf(clipCurrent.ownerId._id);
+      if (indexToRemove !== -1) {
+        updatedAuthUser.following.splice(indexToRemove, 1);
+      }
+      setAuthUser(updatedAuthUser)
     } else {
       setFollowed(true)
+      const updatedAuthUser = { ...authUser };
+      updatedAuthUser.following.push(clipCurrent.ownerId._id);
+      setAuthUser(updatedAuthUser);
     }
-
+     
     } catch(error) {
       console.log(error)
     }
