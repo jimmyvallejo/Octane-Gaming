@@ -15,7 +15,6 @@ export const Clip = ({
   index,
   lastClip,
   refreshCount,
-  refresh,
   handleTop,
 }) => {
   const { authUser, setAuthUser } = useContext(AuthContext);

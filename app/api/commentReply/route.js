@@ -3,12 +3,12 @@ import Video from "@models/video";
 import Comment from "@models/comment";
 
 export const POST = async (req) => {
-  const { owner, post, clipId, ownerName, ownerPic } = await req.json();
+  const { owner, post, commentId, ownerName, ownerPic } = await req.json();
 
   try {
     await connectToDB();
 
-    const newComment = await Comment.create({
+    const newReply = await Comment.create({
       owner: owner,
       ownerName: ownerName,
       ownerPic: ownerPic,
@@ -16,20 +16,19 @@ export const POST = async (req) => {
       likes: [],
       replies: [],
     });
+ 
 
-    console.log("newComment:", newComment);
-
-    const addToVideo = await Video.findByIdAndUpdate(
-      clipId,
-      { $push: { comments: newComment._id } },
+    const addToComment = await Comment.findByIdAndUpdate(
+      commentId,
+      { $push: { replies: newReply._id } },
       { new: true }
-    ).populate("comments");
+    ).populate("replies");
 
     return new Response(
       JSON.stringify({
-        message: "Added Comment",
-        newcomment: newComment,
-        updatedvid: addToVideo,
+        message: "Added Reply",
+        newReply: newReply,
+        updatedComment: addToComment,
       }),
       { status: 201 }
     );

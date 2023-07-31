@@ -13,6 +13,7 @@ const Home = () => {
 
   const lastClip = clips.length -1;
 
+
   const handleTop = () => {
  divRef.current.scrollTo({ top: 0, behavior: 'smooth' });
   }

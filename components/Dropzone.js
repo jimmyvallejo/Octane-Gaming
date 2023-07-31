@@ -149,7 +149,7 @@ const Dropzone = ({ className }) => {
           </div>
         </div>
 
-        {/* Preview */}
+        
         <section className="mt-10">
           <div className=" flex justify-center">
             <TextField

@@ -163,3 +163,8 @@ body {
 .followbutton {
   color: "#6c0736" !important;
 }
+
+.reply {
+  background-color: #222221 ;
+  max-height: 350px;
+}

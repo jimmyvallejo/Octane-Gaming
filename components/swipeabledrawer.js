@@ -7,11 +7,10 @@ import { InputAdornment, TextField } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Image from "next/image";
 import Comment from "./CommentContain";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
-import { useTheme} from '@mui/material/styles'
+import { useTheme } from "@mui/material/styles";
 import theme from "./materialUi/materialUi";
-import { Opacity } from "@mui/icons-material";
 
 export default function SwipeableTemporaryDrawer({
   handleComment,
@@ -22,16 +21,28 @@ export default function SwipeableTemporaryDrawer({
   setUsing,
   clip,
   authUser,
-  comment
-  
+  comment,
 }) {
   const [updatedClip, setUpdatedClip] = useState(null);
+  const [scroll, setScroll] = useState(null)
+
+
+  const divRef = useRef();
+
+  const handleScroll = () => {
+    divRef.current.scrollBy(0, 80);
+  };
+
+  useEffect(() => {
+      handleScroll();
+  }, [scroll]);
+
 
   const themed = useTheme(theme);
 
   useEffect(() => {
-    console.log(themed)
-  },[themed])
+    console.log(themed);
+  }, [themed]);
 
   const [state, setState] = useState({
     top: false,
@@ -122,7 +133,8 @@ export default function SwipeableTemporaryDrawer({
     >
       {updatedClip !== null && (
         <div
-          className={`overflow-y-scroll w-full  h-[50%] rounded-md flex flex-col commentContain  `}
+          className={`overflow-y-scroll w-full h-[60%] rounded-md flex flex-col commentContain`} 
+          ref={divRef}
         >
           {updatedClip.comments.map((comments, index) => {
             return (
@@ -130,6 +142,10 @@ export default function SwipeableTemporaryDrawer({
                 key={comment._id}
                 comments={comments}
                 authUser={authUser}
+                list={list}
+                index={index}
+                setScroll={setScroll}
+                scroll={scroll}
               />
             );
           })}
@@ -139,7 +155,7 @@ export default function SwipeableTemporaryDrawer({
         {authUser ? (
           <Button
             className="text-lg text-white mt-3 pt-3 border"
-            style={{ backgroundColor: "#630330", color: "white"  }}
+            style={{ backgroundColor: "#630330", color: "white" }}
             onClick={toggleDrawer(anchor, true)}
           >
             Add a comment

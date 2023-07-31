@@ -1,7 +1,7 @@
 
 'use client'
 import "../app/styles/globals.css";
-import { Inter } from "next/font/google";
+
 import Nav from "@components/Nav";
 import { AuthProvider } from "@components/authProvider";
 import { ClipProvider } from "@components/clipProvider";
