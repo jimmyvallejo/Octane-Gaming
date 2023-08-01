@@ -183,7 +183,7 @@ export const Clip = ({
   };
 
   return (
-    <div className="flex flex-col h-screen justify-center snap-y snap-mandatory snap-center relative items-center pl-20 ml-40">
+    <div className="flex flex-col h-screen justify-center snap-y snap-mandatory snap-center relative items-center ml-60">
       <div className=" flex flex-col items-center">
         {!loading ? (
           <div className="pt-5">

@@ -18,13 +18,9 @@ const SideNav = () => {
     return (
       <section className={martelSans.className}>
         <div className="sideNav fixed h-screen flex flex-col items-start tracking-wider uppercase font-bold">
-          <div className="pt-5 flex flex-col justify-start w-full mt-5">
-            <div className="flex flex-row items-center justify-start border-b w-full">
-              {" "}
-              <h1 className="text-2xl ml-4 mb-2 text-gray-300 ">Navigation</h1>
-            </div>
-            <div className="flex mt-5 flex-col items-center  justify-around h-60 mr-5 w-full pointer">
-              <div className="flex flex-row items-center justify-between w-full">
+          <div className="pt-5 flex flex-col justify-start w-full mt-5 border-b border-gray-500">
+            <div className="flex  flex-col items-center  justify-around h-60 mr-5 w-full pointer">
+              <div className="flex flex-row items-center justify-between w-[97%] rounded py-3 hover:bg-gray-800">
                 <div className="flex flex-row items-center ml-3">
                   <Image
                     src={`/assets/icons/customer.png`}
@@ -33,7 +29,7 @@ const SideNav = () => {
                     alt="profile"
                   />
                   <Link
-                    className="ml-2 text-xl mt-1 text-gray-300 "
+                    className="ml-2 text-l mt-2 text-gray-300 "
                     href={`/profile`}
                   >
                     Profile
@@ -47,7 +43,7 @@ const SideNav = () => {
                   alt="continue"
                 />
               </div>
-              <div className="flex flex-row items-center justify-between w-full">
+              <div className="flex flex-row items-center justify-between w-[97%] rounded py-3 hover:bg-gray-800">
                 <div className="flex flex-row items-center ml-3">
                   <Image
                     src={`https://www.svgrepo.com/show/508322/upload.svg`}
@@ -56,7 +52,7 @@ const SideNav = () => {
                     alt="profile"
                   />
                   <Link
-                    className="ml-2 text-xl mt-1 text-gray-300"
+                    className="ml-2 text-l mt-2 text-gray-300"
                     href={`/upload`}
                   >
                     Upload
@@ -66,11 +62,11 @@ const SideNav = () => {
                   src={`/assets/icons/right.png`}
                   width={25}
                   height={25}
-                  className="mr-4"
+                  className="mr-4 "
                   alt="continue"
                 />
               </div>
-              <div className="flex flex-row items-center justify-between w-full ">
+              <div className="flex flex-row items-center justify-between w-[97%] rounded py-3 hover:bg-gray-800 ">
                 <div className="flex flex-row items-center ml-3 cursor-pointer ">
                   <Image
                     src="/assets/icons/shutdown.png"
@@ -78,7 +74,10 @@ const SideNav = () => {
                     height={32}
                     alt="logout"
                   />
-                  <a className="ml-3 text-xl text-gray-300" onClick={changeLogout}>
+                  <a
+                    className="ml-3 text-l mt-1 text-gray-300"
+                    onClick={changeLogout}
+                  >
                     Logout
                   </a>
                 </div>
