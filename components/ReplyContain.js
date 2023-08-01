@@ -8,7 +8,7 @@ const Reply = ({ reply }) => {
     },[])
 
   return (
-    <div className=" flex items-start justify-start flex flex-col ml-5 mt-5 mb-5">
+    <div className=" flex items-start justify-start flex flex-col mt-5 mb-5">
       <div className="flex">
         <Image
           src={reply.ownerPic}

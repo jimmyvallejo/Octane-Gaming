@@ -193,7 +193,7 @@ const Comment = ({ comments, authUser, index, setScroll, scroll }) => {
               </Button>
             ) : (
               <Link
-                className="text-lg text-white mt-3 pt-3 flex justify-center"
+                className="text-md text-white  pt-3  ml-10 "
                 href={"/login"}
               >
                 Sign in to Reply

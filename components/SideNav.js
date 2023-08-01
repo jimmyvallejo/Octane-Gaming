@@ -1,7 +1,10 @@
+
 import React from 'react'
 import Link from 'next/link';
 import Image from 'next/image';
 import { Martel_Sans } from 'next/font/google';
+import { useContext } from 'react';
+import { AuthContext } from './authProvider';
 
   const martelSans = Martel_Sans({
     weight: ["300", "400", "600"],
@@ -9,6 +12,8 @@ import { Martel_Sans } from 'next/font/google';
   });
 
 const SideNav = () => {
+
+     const { changeLogout, authUser } = useContext(AuthContext);
   
     return (
       <section className={martelSans.className}>
@@ -73,9 +78,9 @@ const SideNav = () => {
                     height={32}
                     alt="logout"
                   />
-                  <Link className="ml-3 text-xl text-gray-300" href={`/logout`}>
+                  <a className="ml-3 text-xl text-gray-300" onClick={changeLogout}>
                     Logout
-                  </Link>
+                  </a>
                 </div>
                 <Image
                   src={`/assets/icons/right.png`}

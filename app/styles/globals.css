@@ -51,6 +51,7 @@ body {
   background-color: #191b1f;
  margin-top: 60px;
   width: 14%;
+  z-index: 10;
 }
 
 .search{

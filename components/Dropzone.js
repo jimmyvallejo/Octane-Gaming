@@ -126,8 +126,13 @@ const Dropzone = ({ className }) => {
 
 
   return (
-    <div className=" max-w-xl flex flex-col items-center">
-      <Image src={`https://www.svgrepo.com/show/366049/upload.svg`} width={80} height={80} alt="upload" />
+    <div className=" max-w-xl flex flex-col items-center pl-20 ml-40">
+      <Image
+        src={`https://www.svgrepo.com/show/366049/upload.svg`}
+        width={80}
+        height={80}
+        alt="upload"
+      />
       <form
         className="uploadForm py-10"
         onSubmit={handleSubmit}
@@ -149,7 +154,6 @@ const Dropzone = ({ className }) => {
           </div>
         </div>
 
-        
         <section className="mt-10">
           <div className=" flex justify-center">
             <TextField
