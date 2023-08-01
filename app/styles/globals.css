@@ -41,12 +41,26 @@ body {
 }
 
 .nav {
-  background-color: #121212;
+  background-color: #24272c;
   z-index: 1;
   max-height: 60px;
   min-height: 60px;
 }
 
+.sideNav {
+  background-color: #191b1f;
+ margin-top: 60px;
+  width: 14%;
+}
+
+.search{
+  margin-left: 200px !important;
+  
+}
+
+.pointer {
+  cursor: pointer;
+}
 
 .vidDet {
   width: 750px;

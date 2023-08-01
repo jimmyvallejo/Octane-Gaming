@@ -5,6 +5,7 @@ import { ClipContext } from "@components/clipProvider";
 
 
 
+
 const Home = () => {
 
   const {clips, getRandomClips} = useContext(ClipContext)
@@ -26,29 +27,28 @@ const Home = () => {
     }, [refresh]);
 
   return (
-    
-      <section>
-        <div
-          className=" relative overflow-y-auto overscroll-y-contain snap-y
+    <section>
+      
+      <div
+        className=" relative overflow-y-auto overscroll-y-contain snap-y
         snap-mandatory snap-center h-screen no-scrollbar"
-          ref={divRef}
-        >
-          {clips.map((clip, index) => {
-            return (
-              <Clip
-                key={index}
-                clip={clip}
-                index={index}
-                lastClip={lastClip}
-                refresh={refresh}
-                refreshCount={refreshCount}
-                handleTop={handleTop}
-              />
-            );
-          })}
-        </div>
-      </section>
- 
+        ref={divRef}
+      >
+        {clips.map((clip, index) => {
+          return (
+            <Clip
+              key={index}
+              clip={clip}
+              index={index}
+              lastClip={lastClip}
+              refresh={refresh}
+              refreshCount={refreshCount}
+              handleTop={handleTop}
+            />
+          );
+        })}
+      </div>
+    </section>
   );
   
 };

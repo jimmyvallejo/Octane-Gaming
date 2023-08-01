@@ -14,16 +14,17 @@ const Nav = () => {
   const {getRandomClips} = useContext(ClipContext)
 
   return (
-    <div className="flex fixed nav items-center border-b border-gray-500 border-opacity-40">
+    <div className="flex fixed nav items-center ">
       <div className="flex justify-between items-center  w-screen">
-        <Link className="" href="/">
+        <Link className="ml-3" href="/">
           <Image
-            src="/assets/images/Screenshot from 2023-07-18 13-52-00.png"
-            width={110}
-            height={85}
+            src="/assets/images/octanelogo.png"
+            width={130}
+            height={90}
             className=" rounded-md"
             alt="logo"
             onClick={getRandomClips}
+           
           />
         </Link>
         <div>
@@ -31,10 +32,11 @@ const Nav = () => {
             id="search"
             type="search"
             sx={{
-              width: 450,
+              width: 350,
               height: 40,
-              backgroundColor: "#a9a9a9",
-              borderRadius: "50px",
+              backgroundColor: "#191b1f",
+              marginLeft: "50px",
+              
 
               ".MuiOutlinedInput-root": {
                 "& fieldset": {
@@ -54,11 +56,11 @@ const Nav = () => {
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end" sx={{ marginBottom: 2 }}>
-                  <SearchIcon />
+                  <SearchIcon sx={{color: "grey"}} />
                 </InputAdornment>
               ),
             }}
-            className="ml-5"
+            className="ml-5 search"
           />
         </div>
         {!authUser ? (

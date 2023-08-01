@@ -131,7 +131,7 @@ export default function SwipeableTemporaryDrawer({
     <div
       className={`flex justify-start mb-5  min-w-[40%] max-w-[40%] mt-10 flex-col min-h-[70%] rounded-lg pt-2 fade-in-top`}
     >
-      {updatedClip !== null && (
+      {updatedClip !== null ? 
         <div
           className={`overflow-y-scroll w-full h-[60%] rounded-md flex flex-col commentContain`} 
           ref={divRef}
@@ -147,10 +147,11 @@ export default function SwipeableTemporaryDrawer({
                 setScroll={setScroll}
                 scroll={scroll}
               />
-            );
+            )
           })}
         </div>
-      )}
+        : <div ref={divRef}></div>
+      }
       <>
         {authUser ? (
           <Button

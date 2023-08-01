@@ -22,6 +22,7 @@ const Comment = ({ comments, authUser, index, setScroll, scroll }) => {
   const [replyText, setReplyText] = useState("");
   const [using, setUsing] = useState(null);
 
+
   const [state, setState] = useState({
     top: false,
     left: false,
@@ -50,7 +51,7 @@ const Comment = ({ comments, authUser, index, setScroll, scroll }) => {
   }, [current]);
 
   const toggleDrawer = (anchor, open) => (event) => {
-    if (using === null) {
+    if (!using) {
       if (
         event &&
         event.type === "keydown" &&
@@ -63,12 +64,13 @@ const Comment = ({ comments, authUser, index, setScroll, scroll }) => {
   };
 
   const handleClose = () => {
-    setUsing(null);
+   setUsing(null);
     toggleDrawer(anchor, false);
   };
 
   const handleReply = async () => {
     try {
+    
       const data = {
         owner: authUser.id,
         ownerName: authUser.username,
@@ -77,9 +79,10 @@ const Comment = ({ comments, authUser, index, setScroll, scroll }) => {
         commentId: comments._id,
       };
       const reply = await axios.post(`${baseUrl}api/commentReply`, data);
-      handleClose();
       setGetReplies(reply.data.updatedComment.replies);
-      console.log(reply.data);
+      handleCurrent(index)
+      setUsing(false)
+      toggleDrawer(anchor, false);
       setReplyText("");
     } catch (error) {
       setUsing(null);
@@ -160,24 +163,23 @@ const Comment = ({ comments, authUser, index, setScroll, scroll }) => {
           {getReplies.length} {getReplies.length === 1 ? "reply" : "replies"}
         </button>
         {authUser && (
-          <button onClick={() => handleCurrent(index)} className="text-xs ml-3">
+          <button onClick={toggleDrawer(anchor, true)} className="text-xs ml-3">
             Reply
           </button>
         )}
       </div>
       {reply && current === index && (
         <div
-          className={`flex justify-start items-center min-w-[95%] max-w-[95%] mt-10 flex-col   rounded-lg pt-2 fade-in-top reply border`}
+          className={`flex justify-start items-center min-w-[95%] max-w-[95%] mt-10 flex-col   rounded-lg pt-2 fade-in-top reply`}
         >
           <div
             className={`overflow-y-scroll w-[90%] max-h-[50%]  rounded-md flex flex-col commentContain reply `}
-            
           >
             {getReplies.map((reply, index) => {
               return <Reply key={index} reply={reply} />;
             })}
           </div>
-          <div className="flex justify-between w-[95%] mt-5">
+          <div className="flex justify-between w-[95%] mt-5 mb-3">
             <button className="ml-3 mt-3" onClick={() => setReply(!reply)}>
               Close
             </button>

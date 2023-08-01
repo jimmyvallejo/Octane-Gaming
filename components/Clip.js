@@ -183,14 +183,14 @@ export const Clip = ({
   };
 
   return (
-    <div className="flex flex-col h-screen justify-center snap-y snap-mandatory snap-center relative items-center ">
-      <div className=" flex flex-col items-center ">
+    <div className="flex flex-col h-screen justify-center snap-y snap-mandatory snap-center relative items-center pl-20 ml-40">
+      <div className=" flex flex-col items-center">
         {!loading ? (
           <div className="pt-5">
             <ReactPlayer
               url={clip.url}
-              width={`780px`}
-              height={`500px`}
+              width={`${!comment ? "1000px" : "680px"}`}
+              height={`${!comment ? "680px" : "400px"}`}
               controls={true}
               onPlay={handleView}
               ref={playerRef}
@@ -201,9 +201,9 @@ export const Clip = ({
           <div className="loader"></div>
         )}
         <div
-          className={`flex mt-4 flex-row justify-between w-[90%] ${
-            comment && ""
-          }  `}
+          className={`flex ${
+            index === lastClip ? "mt-4" : "mt-7"
+          } flex-row justify-between w-[70%]  ${comment && ""}  `}
         >
           <div className={`mr-2 flex flex-row items-center`}>
             <Image
@@ -315,12 +315,12 @@ export const Clip = ({
         <div></div>
       )}
       {index === lastClip ? (
-        <div className="flex ">
+        <div className="flex mb-10 mt-10 ">
           <Image
             src={"https://www.svgrepo.com/show/274026/refresh.svg"}
             width={40}
             height={40}
-            className="mt-20 cursor-pointer spinner"
+            className=" cursor-pointer spinner  "
             onClick={() => handleNewVids()}
             alt="refresh"
           ></Image>

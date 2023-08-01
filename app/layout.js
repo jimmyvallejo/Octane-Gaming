@@ -3,6 +3,7 @@
 import "../app/styles/globals.css";
 
 import Nav from "@components/Nav";
+import SideNav from "@components/SideNav";
 import { AuthProvider } from "@components/authProvider";
 import { ClipProvider } from "@components/clipProvider";
 import { Roboto } from "next/font/google";
@@ -19,8 +20,9 @@ export default function RootLayout({ children }) {
       <body className={roboto.className}>
         <AuthProvider>
           <ClipProvider>
-              <Nav />
-              <div className="pt-15">{children}</div>
+            <Nav />
+            <SideNav />
+            <div className="pt-15">{children}</div>
           </ClipProvider>
         </AuthProvider>
       </body>
