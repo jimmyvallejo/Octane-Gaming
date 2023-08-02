@@ -54,6 +54,10 @@ body {
   z-index: 10;
 }
 
+.clip {
+  padding-top: 60px;
+}
+
 .search{
   margin-left: 200px !important;
   
@@ -63,23 +67,12 @@ body {
   cursor: pointer;
 }
 
-.vidDet {
-  width: 750px;
-  border-bottom: 1px solid grey;
-  padding-top: 50px;
-  padding-bottom: 50px;
-  padding-right: 10px;
-  
-}
-
 .vidInfo {
-  width: 750px;
-  
+  background-color: #24272c;
+  margin-top: -30px ;
 }
 
-.commentcontain {
-  height: 200px ;
-}
+
 
 .drawerClosed {
   width: 0;
@@ -95,7 +88,7 @@ body {
   overflow-y: scroll;
   scrollbar-color: #c7cfcb #e0e0e0;
   scrollbar-width: thin;
-  background-color: #171717;
+  background-color: #191b1f;
   
 }
 
@@ -165,8 +158,8 @@ body {
 }
 
 .loader {
-  width: 780;
-  height: 500;
+  width: 100%;
+  height: 100%;
   background-color: black;
   border: #928f8f;
 }
@@ -183,3 +176,4 @@ body {
   background-color: #222221 ;
   max-height: 350px;
 }
+

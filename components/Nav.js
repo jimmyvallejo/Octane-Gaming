@@ -27,7 +27,7 @@ const Nav = () => {
            
           />
         </Link>
-        <div>
+        <div className="mr-5">
           <TextField
             id="search"
             type="search"
@@ -35,7 +35,7 @@ const Nav = () => {
               width: 350,
               height: 40,
               backgroundColor: "#191b1f",
-              marginLeft: "50px",
+           
               
 
               ".MuiOutlinedInput-root": {

@@ -48,7 +48,7 @@ const Comment = ({ comments, authUser, index, setScroll, scroll }) => {
       }
     };
     handleGetReplies();
-  }, [current]);
+  }, []);
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (!using) {

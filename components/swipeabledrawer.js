@@ -13,7 +13,7 @@ import { useTheme } from "@mui/material/styles";
 import theme from "./materialUi/materialUi";
 
 export default function SwipeableTemporaryDrawer({
-  handleComment,
+
   handleSubmitComment,
   setCommentText,
   commentText,
@@ -21,7 +21,7 @@ export default function SwipeableTemporaryDrawer({
   setUsing,
   clip,
   authUser,
-  comment,
+ 
 }) {
   const [updatedClip, setUpdatedClip] = useState(null);
   const [scroll, setScroll] = useState(null)
@@ -53,7 +53,7 @@ export default function SwipeableTemporaryDrawer({
 
   useEffect(() => {
     setUpdatedClip(clip);
-  }, []);
+  }, [using]);
 
   useEffect(() => {
     console.log("updated clip:", updatedClip);
@@ -128,18 +128,16 @@ export default function SwipeableTemporaryDrawer({
   );
 
   return (
-    <div
-      className={`flex justify-start mb-5  min-w-[40%] max-w-[40%] mt-10 flex-col min-h-[70%] rounded-lg pt-2 fade-in-top`}
-    >
-      {updatedClip !== null ? 
+    <div className={`flex w-[20%] flex-col h-screen rounded-lg fade-in-top `}>
+      {updatedClip !== null ? (
         <div
-          className={`overflow-y-scroll w-full h-[60%] rounded-md flex flex-col commentContain`} 
+          className={`overflow-y-scroll w-full h-[88.2%] rounded-md flex flex-col commentContain`}
           ref={divRef}
         >
           {updatedClip.comments.map((comments, index) => {
             return (
               <Comment
-                key={comment._id}
+                key={comments._id}
                 comments={comments}
                 authUser={authUser}
                 list={list}
@@ -147,23 +145,24 @@ export default function SwipeableTemporaryDrawer({
                 setScroll={setScroll}
                 scroll={scroll}
               />
-            )
+            );
           })}
         </div>
-        : <div ref={divRef}></div>
-      }
+      ) : (
+        <div ref={divRef}></div>
+      )}
       <>
         {authUser ? (
           <Button
-            className="text-lg text-white mt-3 pt-3 border"
-            style={{ backgroundColor: "#630330", color: "white" }}
+            className="text-lg text-white border  w-full place-self-center flex  mb-1 "
+            style={{ backgroundColor: "#24272c", color: "white" }}
             onClick={toggleDrawer(anchor, true)}
           >
             Add a comment
           </Button>
         ) : (
           <Link
-            className="text-lg text-white mt-3 pt-3 flex justify-center"
+            className="text-lg text-white flex justify-center border border-gray-500 rounded-md"
             href={"/login"}
           >
             Sign in to comment
@@ -174,7 +173,6 @@ export default function SwipeableTemporaryDrawer({
           open={state[anchor]}
           onClose={() => {
             toggleDrawer(anchor, false);
-            handleComment();
           }}
           onOpen={toggleDrawer(anchor, true)}
         >
