@@ -9,6 +9,9 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [authUser, setAuthUser] = useState(null);
+  const [authFollowers, setAuthFollowers] = useState(null)
+  const [authFollowing, setAuthFollowing] = useState(null)
+  
   const router = useRouter();
 
   const authenticateUser = async () => {
@@ -32,6 +35,8 @@ const AuthProvider = ({ children }) => {
   const changeLogout = () => {
     localStorage.clear();
     setAuthUser(null);
+    setAuthFollowing(null)
+    setAuthFollowing(null)
     router.push('/')
   };
 
@@ -39,12 +44,29 @@ const AuthProvider = ({ children }) => {
     authenticateUser();
   }, []);
 
+
+   useEffect(() => {
+    const getFollowersFollowing= async () => {
+      try {
+      const response = await axios.post(`${baseUrl}api/getFollowersFollowing`, {id: authUser.id})
+      console.log(response.data)
+      setAuthFollowers(response.data.userData.followers)
+      setAuthFollowing(response.data.userData.following)
+      } catch(error){
+        console.log(error)
+      }
+    }
+   getFollowersFollowing()
+   },[authUser])
+
    useEffect(() => {
      console.log("This is authuser:", authUser)
+     console.log("This is Following:", authFollowers)
+     console.log("This is followers:", authFollowing)
    }, [authUser]);
 
   return (
-    <AuthContext.Provider value={{ authenticateUser, changeLogout, authUser, setAuthUser }}>
+    <AuthContext.Provider value={{ authenticateUser, changeLogout, authUser, setAuthUser, authFollowers, authFollowing }}>
       {children}
     </AuthContext.Provider>
   );

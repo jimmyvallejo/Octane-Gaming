@@ -150,7 +150,7 @@ export const Clip = ({ clip, index, lastClip, refreshCount, handleTop }) => {
         credentials
       );
 
-      console.log(follow.data);
+      console.log("This is follow.data:", follow.data);
 
       if (follow.data.removed === true) {
         setFollowed(false);
@@ -261,7 +261,7 @@ export const Clip = ({ clip, index, lastClip, refreshCount, handleTop }) => {
                 <Image
                   src={
                     !heart
-                      ? `/assets/images/play-button.png`
+                      ? `/assets/icons/heart.png`
                       : `https://www.svgrepo.com/show/397697/red-heart.svg`
                   }
                   width={40}

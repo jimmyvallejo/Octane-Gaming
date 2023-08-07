@@ -151,6 +151,7 @@ const Comment = ({ comments, authUser, index, setScroll, scroll }) => {
           width={30}
           height={30}
           className="mr-3"
+          alt="Comment Owner Picture"
         />
         <h1 className="text-white">{comments.ownerName}: </h1>
       </div>
