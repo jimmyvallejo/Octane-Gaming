@@ -70,7 +70,7 @@ const SideNav = () => {
               </div>
             </div>
           )}
-          {!authUser && <h1 className="text-md ml-2">Sign in to use DashBoard</h1>}
+          {!authUser && <h1 className="text-md ml-2 mb-1 mt-2">Sign in to use DashBoard</h1>}
         </div>
         {authUser && 
         <div className="flex flex-col justify-between  rounded py-3 mt-3 w-full ">
