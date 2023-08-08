@@ -220,34 +220,3 @@ const Comment = ({ comments, authUser, index, setScroll, scroll }) => {
 
 export default Comment;
 
-// {/* <>
-//             {/* {authUser ? (
-//               <Button
-//                 className="text-lg text-white mt-3 pt-3 border"
-//                 style={{ backgroundColor: "#630330", color: "white" }}
-//                 onClick={toggleDrawer(anchor, true)}
-//               >
-//                 Add a comment
-//               </Button>
-//             ) : (
-//               <Link
-//                 className="text-lg text-white mt-3 pt-3 flex justify-center"
-//                 href={"/login"}
-//               >
-//                 Sign in to comment
-//               </Link>
-//             // )} */}
-//             <SwipeableDrawer
-//               anchor={anchor}
-//               open={state[anchor]}
-//               onClose={() => {
-//                 toggleDrawer(anchor, false);
-//               }}
-//               onOpen={toggleDrawer(anchor, true)}
-//             >
-//               {list(anchor)}
-//             </SwipeableDrawer>
-//           </>
-//         </div>
-//       )}
-//     </div> */}

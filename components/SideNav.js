@@ -96,7 +96,7 @@ const SideNav = () => {
                 </div>
 
 
-        
+
         )
         })
       }

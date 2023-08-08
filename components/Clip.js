@@ -267,7 +267,7 @@ export const Clip = ({ clip, index, lastClip, refreshCount, handleTop }) => {
                   width={40}
                   height={40}
                   alt="likes"
-                  className="mr-2 cursor-pointer"
+                  className="mr-2 cursor-pointer mt-1"
                   onClick={handleLike}
                 />
                 <h3 className="text-l">{likes}</h3>

@@ -112,8 +112,6 @@ const Dropzone = ({ className }) => {
     } catch (error) {
          if (error.response) {
            console.log("Data", error.response.data);
-           console.log("Status", error.response.status);
-           console.log("Headers", error.response.headers);
          } else if (error.request) {
            console.log("Request", error.request);
          } else {

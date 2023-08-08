@@ -27,7 +27,7 @@ const Nav = () => {
            
           />
         </Link>
-        <div className="mr-5">
+        <div>
           <TextField
             id="search"
             type="search"
@@ -35,6 +35,7 @@ const Nav = () => {
               width: 350,
               height: 40,
               backgroundColor: "#191b1f",
+              marginRight: "140px",
            
               
 

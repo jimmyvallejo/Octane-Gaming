@@ -15,6 +15,7 @@ const Reply = ({ reply }) => {
           width={30}
           height={30}
           className="mr-3"
+          alt="reply owner picture"
         />
         <h1 className="text-white"> {reply.ownerName} </h1>
       </div>
