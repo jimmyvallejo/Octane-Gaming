@@ -7,6 +7,7 @@ import { useContext } from "react";
 import Image from "next/image";
 import {  InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { signOut } from "next-auth/react";
 
 
 const Nav = () => {
@@ -69,11 +70,13 @@ const Nav = () => {
             </Link>
           </div>
         ) : (
-          <div className="p-3">
+          <div className="p-3 flex items-center">
             {" "}
+            <div className="border py-1 rounded-sm hover:border-violet-500 transition ease-in-out duration-200">
             <Link className="p-3" href="/upload">
-              Upload
+             + Upload
             </Link>
+            </div>
             <a className="p-3 cursor-pointer" onClick={changeLogout}>
               Logout
             </a>

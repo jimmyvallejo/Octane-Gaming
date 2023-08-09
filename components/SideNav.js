@@ -58,7 +58,7 @@ const SideNav = () => {
                  }
                 </div>
               </div>
-              <div className="flex flex-row items-center justify-between w-[97%] rounded py-3 hover:bg-gray-800 ">
+              <div className="flex flex-row items-center justify-between w-[97%] rounded py-3 hover:bg-gray-800 transition ease-in-out duration-300 ">
                 <div className="flex flex-row items-center ml-3 cursor-pointer ">
                   <Image
                     src="/assets/icons/shutdown.png"
@@ -83,10 +83,10 @@ const SideNav = () => {
         {authUser && window.innerWidth > mobileService && 
         <div className="flex flex-col justify-between  rounded py-3 mt-3 w-full ">
           <h1 className="flex justify-center mr-4 text-sm tracking-normal">Recent Followers</h1>
-        {authUser && authUser.followers.length > 0 && authFollowers && authFollowers.slice(0, 5).map((follower, index) =>  {
+        {authUser && authUser.followers && authFollowers && authFollowers.slice(0, 5).reverse().map((follower, index) =>  {
         return (
           <Link key={index} href={`/profile/${follower.username}`}>
-            <div  className="flex flex-row items-center my-3 rounded  hover:bg-gray-800 w-[97%] ml-1 border border-gray-800 p-2">
+            <div  className="flex flex-row items-center my-3 rounded  hover:bg-gray-800 w-[97%] ml-1 border border-gray-800 p-2 transition ease-in-out duration-400">
                   <Image
                     src={follower.image}
                     width={35}

@@ -3,6 +3,7 @@ import { useEffect, createContext, useState } from "react";
 import axios from "axios";
 import { baseUrl } from "@utils/baseUrl";
 import { useRouter } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
 
 
 const AuthContext = createContext();
@@ -11,6 +12,8 @@ const AuthProvider = ({ children }) => {
   const [authUser, setAuthUser] = useState(null);
   const [authFollowers, setAuthFollowers] = useState(null)
   const [authFollowing, setAuthFollowing] = useState(null)
+  
+  const {data: session} = useSession()
   
   const router = useRouter();
 
@@ -34,6 +37,7 @@ const AuthProvider = ({ children }) => {
 
   const changeLogout = () => {
     localStorage.clear();
+    signOut()
     setAuthUser(null);
     setAuthFollowing(null)
     setAuthFollowing(null)
@@ -41,7 +45,13 @@ const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if(token){
     authenticateUser();
+    }
+    if(session){
+     setAuthUser(session.user)
+    }
   }, []);
 
 

@@ -22,7 +22,6 @@ const UserSchema = new Schema(
     },
     password: {
       type: String,
-      required: true,
     },
     videos: [{ type: Schema.Types.ObjectId, ref: "Video" }],
     liked: [{ type: Schema.Types.ObjectId, ref: "Video" }],

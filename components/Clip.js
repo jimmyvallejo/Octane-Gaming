@@ -235,9 +235,9 @@ export const Clip = ({ clip, index, lastClip, refreshCount, handleTop }) => {
                 className=" ml-5 h-10 mt-2 followbutton"
                 variant={!followed ? "outlined" : "outlined"}
                 sx={{
-                  borderColor: !followed ? "#6c0736" : "default",
+                  borderColor: !followed ? "rgb(168 85 247)" : "default",
                   ":hover": {
-                    borderColor: !followed ? "default" : "#6c0736",
+                    borderColor: !followed ? "default" : "rgb(168 85 247)",
                   },
                   color: !followed ? "white" : "white",
                 }}

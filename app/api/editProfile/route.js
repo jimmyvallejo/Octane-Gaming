@@ -1,5 +1,6 @@
 import { connectToDB } from "@utils/database";
-import User from "@models/user";
+
+import {User, Video, Comment } from "../models";
 import jwt from "jsonwebtoken";
 
 
@@ -30,7 +31,24 @@ export const PUT = async (req) => {
         },
         { new: true }
       );
+
+      const updateVideos = await Video.updateMany(
+        { ownerName: current }, 
+        { $set: { ownerName: username, image: image } },
+       
+      );
      
+
+      const updateComments = await Comment.updateMany(
+        { ownerName: current }, 
+        { $set: { ownerName: username, ownerPic: image } }, 
+       
+      );
+     
+
+      console.log(updateVideos)
+      console.log(updateComments)
+
       const payload = {
         id: updatedUser._id,
         email: updatedUser.email,

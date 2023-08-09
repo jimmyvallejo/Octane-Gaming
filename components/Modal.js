@@ -212,12 +212,16 @@ import { useRouter } from "next/navigation";
         />
         </div>
         <div className='w-full flex items-center justify-center mt-6 '>
-        <button
-              type="submit"
-              className="  rounded-md border mr-2 border-purple-600 px-3 pt-2 pb-2 text-[13.6px]  uppercase  text-white transition-colors hover:bg-purple-600 hover:text-white"
-            >
-              Upload
-            </button>
+        <Button
+            className="rounded-md border mr-2 border-purple-600  text-[13.6px]  uppercase  text-white transition-colors hover:border-green-500 hover:text-white"
+            variant={"outlined"}
+            type="submit"
+              
+          >
+              
+            
+              Submit
+            </Button>
           <Button className='ml-2' onClick={handleEdit} variant="outlined" color="error">
   Cancel
 </Button>

@@ -7,14 +7,28 @@ import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 import axios from "axios";
 import { baseUrl } from "@utils/baseUrl";
+import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+import Image from "next/image";
 
 const Login = () => {
-  const { authenticateUser } = useContext(AuthContext);
+  const { authenticateUser, setAuthUser } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null)
 
+  const { data: session } = useSession();
+
+  const [providers, setProviders] = useState(null);
+
   const router = useRouter();
+
+  useEffect(() => {
+    (async () => {
+      const res = await getProviders();
+      setProviders(res);
+      console.log(res)
+    })();
+  }, []);
 
   const handleSubmit = async () => {
     const data = { email: email, password: password };
@@ -31,11 +45,14 @@ const Login = () => {
   };
 
   useEffect(() => {
-    console.log(error)
-  },[error])
+    if(session) { 
+      setAuthUser(session.user)
+      router.push("/")
+    }
+  },[session])
 
   return (
-    <div className="text-white flex items-center flex-col text-2xl text-red-500 pt-20">
+    <div className="text-white flex items-center flex-col text-2xl text-red-500 pt-20 ml-[14%]">
       <h1 className="mb-5">Login</h1>
       <div>
         <TextField
@@ -105,6 +122,23 @@ const Login = () => {
       >
         Submit
       </Button>
+      {providers &&
+              Object.values(providers).map((provider) => (
+                <div key={provider.id} className="flex items-center w-[15%]  justify-around mt-10 ">
+                <button
+                  type='button'
+                  key={provider.name}
+                  onClick={() => {
+                    signIn(provider.id);
+                  }}
+                  
+                >
+                  Sign in with: 
+                </button>
+                <Image src={`/assets/icons/google.png`} width={35} height={50} alt="google" />
+                </div>
+              ))}
+          
     </div>
   );
 };
