@@ -41,58 +41,62 @@ const Login = () => {
   }, [session]);
 
   return (
-    <div className="text-white flex items-center flex-col text-2xl text-red-500 pt-20 ml-[14%]">
-      <h1 className="mb-5">Login</h1>
-      <div className="flex flex-col justify-center w-[18%]">
+    <div className="text-white flex items-center flex-col text-2xl text-red-500 pt-60 ml-[14%] h-screen ">
+      <div className="w-[30%] flex flex-col justify-center items-center  py-10 rounded-lg loginContain">
+      <h1 className="mb-5 text-3xl">Log In to Octane</h1>
+      <div className="flex flex-col justify-center w-[70%]">
         <TextField
-          variant="outlined"
+          variant="filled"
           label="Email"
           type="email"
           sx={{
             "& .MuiOutlinedInput-root": {
               "& fieldset": {
-                borderColor: "#DC143C",
+                borderColor: "white",
               },
               "&:hover fieldset": {
-                borderColor: "#DC143C",
+                borderColor: "#white",
               },
               "&.Mui-focused fieldset": {
-                borderColor: "#DC143C",
+                borderColor: "white",
               },
             },
             "& .MuiInputBase-input": {
-              color: "#DC143C",
+              color: "white",
             },
             "& .MuiFormLabel-root": {
-              color: "#DC143C",
+              color: "white",
             },
+            marginTop: 1,
           }}
+          className="logButton rounded"
           onChange={(e) => setEmail(e.target.value)}
         />
         <TextField
-          variant="outlined"
+          variant="filled"
           label="Password"
           type="password"
           sx={{
             "& .MuiOutlinedInput-root": {
               "& fieldset": {
-                borderColor: "#DC143C",
+                borderColor: "white",
               },
               "&:hover fieldset": {
-                borderColor: "#DC143C",
+                borderColor: "#white",
               },
               "&.Mui-focused fieldset": {
-                borderColor: "#DC143C",
+                borderColor: "white",
               },
             },
             "& .MuiInputBase-input": {
-              color: "#DC143C",
+              color: "white",
             },
             "& .MuiFormLabel-root": {
-              color: "#DC143C",
+              color: "white",
             },
             marginTop: 1,
           }}
+          className="logButton rounded"
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
@@ -100,10 +104,10 @@ const Login = () => {
         sx={{
           marginLeft: "5px",
           marginTop: "20px",
-          borderColor: "#DC143C",
-          color: "#DC143C",
+          borderColor: "white",
+          color: "white",
           "&:hover": {
-            borderColor: "#B22222",
+            borderColor: "main",
           },
         }}
         variant="outlined"
@@ -117,19 +121,19 @@ const Login = () => {
         Object.values(providers).map((provider) => (
           <div
             key={provider.id}
-            className="flex items-center w-[20%] mt-5 border py-2 px-2 justify-center rounded-md "
+            className="flex items-center w-[70%] mt-5  py-2 px-2 justify-center rounded-md logButton "
           >
             <Image
               src={`/assets/icons/${provider.id}.png`}
               width={35}
               height={50}
               alt="google"
-              className="mr-2"
+              className="mr-4"
             />
             <button
               type="button"
               key={provider.name}
-              className="ml-2 font-light"
+              className="ml-4 font-light text-xl"
               onClick={() => {
                 signIn(provider.id);
               }}
@@ -138,6 +142,7 @@ const Login = () => {
             </button>
           </div>
         ))}
+        </div>
     </div>
   );
 };

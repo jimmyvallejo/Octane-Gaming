@@ -46,95 +46,98 @@ const Signup = () => {
   };
 
   return (
-    <div className="text-white flex items-center flex-col text-2xl text-red-500 pt-20 ml-[14%]">
-      <h1 className="mb-5">Signup</h1>
-      <div className="flex flex-col justify-center w-[18%]">
-        <TextField
-          variant="outlined"
+    <div className="text-white justify-center flex items-center flex-col text-2xl text-red-500 pt-20 ml-[14%] h-screen ">
+      <div className="w-[30%] flex flex-col justify-center items-center  py-10 rounded-lg loginContain">
+      <h1 className="mb-5 text-3xl">Signup to Octane</h1>
+      <div className="flex flex-col justify-center items-center w-[70%]">
+      <TextField
+          variant="filled"
           label="Email"
           type="email"
           sx={{
             "& .MuiOutlinedInput-root": {
               "& fieldset": {
-                borderColor: "#DC143C",
+                borderColor: "white",
               },
               "&:hover fieldset": {
-                borderColor: "#DC143C",
+                borderColor: "#white",
               },
               "&.Mui-focused fieldset": {
-                borderColor: "#DC143C",
+                borderColor: "white",
               },
             },
             "& .MuiInputBase-input": {
-              color: "#DC143C",
+              color: "white",
             },
             "& .MuiFormLabel-root": {
-              color: "#DC143C",
+              color: "white",
             },
             marginTop: 1,
           }}
+          className="w-full logButton rounded"
           onChange={(e) => setEmail(e.target.value)}
         />
         <TextField
-          variant="outlined"
+          variant="filled"
           label="Username"
           sx={{
             "& .MuiOutlinedInput-root": {
               "& fieldset": {
-                borderColor: "#DC143C",
+                borderColor: "white",
               },
               "&:hover fieldset": {
-                borderColor: "#DC143C",
+                borderColor: "#white",
               },
               "&.Mui-focused fieldset": {
-                borderColor: "#DC143C",
+                borderColor: "white",
               },
             },
             "& .MuiInputBase-input": {
-              color: "#DC143C",
+              color: "white",
             },
             "& .MuiFormLabel-root": {
-              color: "#DC143C",
+              color: "white",
             },
-            marginTop: 1,
+            marginTop: 1.5,
           }}
+          className="w-full logButton rounded"
           onChange={(e) => setUsername(e.target.value)}
         />
         <TextField
-          variant="outlined"
+          variant="filled"
           label="Password"
           type="password"
           sx={{
             "& .MuiOutlinedInput-root": {
               "& fieldset": {
-                borderColor: "#DC143C",
+                borderColor: "white",
               },
               "&:hover fieldset": {
-                borderColor: "#DC143C",
+                borderColor: "#white",
               },
               "&.Mui-focused fieldset": {
-                borderColor: "#DC143C",
+                borderColor: "white",
               },
             },
             "& .MuiInputBase-input": {
-              color: "#DC143C",
+              color: "white",
             },
             "& .MuiFormLabel-root": {
-              color: "#DC143C",
+              color: "white",
             },
-            marginTop: 1,
+            marginTop: 1.5,
           }}
           onChange={(e) => setPassword(e.target.value)}
+          className="w-full logButton rounded"
         />
-      </div>
-      <Button
+        <Button
         sx={{
           marginLeft: "5px",
           marginTop: "20px",
-          borderColor: "#DC143C",
-          color: "#DC143C",
+          borderColor: "white",
+          color: "white",
           "&:hover": {
-            borderColor: "#B22222",
+            borderColor: "main",
           },
         }}
         variant="outlined"
@@ -143,13 +146,15 @@ const Signup = () => {
       >
         Submit
       </Button>
+      </div>
+      
       <div className="mt-5 pt-3 w-full flex flex-col justify-center items-center">
         {providers &&
           Object.values(providers).map((provider) => (
             <div
-              key={provider.id}
-              className="flex items-center w-[20%] mt-5 border py-2 px-2 justify-center rounded-md "
-            >
+            key={provider.id}
+            className="flex items-center w-[70%] mt-5  py-2 px-2 justify-center rounded-md logButton "
+          >
               <Image
                 src={`/assets/icons/${provider.id}.png`}
                 width={35}
@@ -160,7 +165,7 @@ const Signup = () => {
               <button
                 type="button"
                 key={provider.name}
-                className="ml-2 font-light"
+                className="ml-4 font-light text-xl"
                 onClick={() => {
                   signIn(provider.id);
                 }}
@@ -169,6 +174,7 @@ const Signup = () => {
               </button>
             </div>
           ))}
+      </div>
       </div>
     </div>
   );

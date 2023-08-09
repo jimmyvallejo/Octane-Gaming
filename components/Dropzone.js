@@ -116,7 +116,7 @@ const Dropzone = ({ className }) => {
   };
 
   return (
-    <div className=" max-w-xl flex flex-col items-center pl-20 ml-40">
+    <div className=" max-w-xl flex flex-col items-center pt-10  ml-[16%] ">
       <Image
         src={`https://www.svgrepo.com/show/366049/upload.svg`}
         width={80}
@@ -124,7 +124,7 @@ const Dropzone = ({ className }) => {
         alt="upload"
       />
       <form
-        className="uploadForm py-10"
+        className="uploadForm "
         onSubmit={handleSubmit}
         enctype="multipart/form-data"
       >
@@ -150,25 +150,28 @@ const Dropzone = ({ className }) => {
               variant="filled"
               label="Description"
               onChange={(e) => setDescription(e.target.value)}
-              className="mb-4 text-red-500"
+              className=" w-full text-red-500 "
               value={description}
               sx={{
-                "& .MuiFilledInput-root": {
-                  borderColor: "white",
-                  "&:hover": {
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
                     borderColor: "white",
                   },
-                  "&.Mui-focused": {
+                  "&:hover fieldset": {
+                    borderColor: "#white",
+                  },
+                  "&.Mui-focused fieldset": {
                     borderColor: "white",
                   },
                 },
-                "& .MuiFilledInput-input": {
+                "& .MuiInputBase-input": {
                   color: "white",
                 },
                 "& .MuiFormLabel-root": {
-                  color: "white",
+                  color: "gray",
                 },
-                width: "480px",
+                backgroundColor : "#24272c",
+                marginTop: 1,
               }}
             />
           </div>

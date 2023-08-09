@@ -69,6 +69,16 @@ body {
   min-height: 60px;
 }
 
+.loginContain {
+  background-color: #191b1f;
+  border-color: #191b1f; ;
+}
+
+.logButton {
+  background-color: #24272c;
+}
+
+
 .sideNav {
   background-color: #191b1f;
  margin-top: 60px;

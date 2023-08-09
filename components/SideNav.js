@@ -79,12 +79,12 @@ const SideNav = () => {
             </div>
           )}
           {!authUser && (
-            <h1 className="text-md ml-2 mb-1 mt-2">Sign in to use DashBoard</h1>
+            <h1 className="text-md ml-2 mb-1 mt-5">Sign in to use DashBoard</h1>
           )}
         </div>
         {authUser && window.innerWidth > mobileService && (
           <div className="flex flex-col justify-between  rounded py-3 mt-3 w-full ">
-            <h1 className="flex justify-center mr-4 text-sm tracking-normal">
+            <h1 className="flex justify-center mr-4 mb-3 text-sm tracking-normal">
               Recent Followers
             </h1>
             {authUser &&
@@ -96,7 +96,7 @@ const SideNav = () => {
                 .map((follower, index) => {
                   return (
                     <Link key={index} href={`/profile/${follower.username}`}>
-                      <div className="flex flex-row items-center my-3 rounded  hover:bg-gray-800 w-[97%] ml-1 border border-gray-800 p-2 transition ease-in-out duration-400">
+                      <div className="flex flex-row items-center justify-start border my-2 border-gray-800 w-[97%] rounded py-3 hover:bg-gray-800 transition ease-in-out duration-300">
                         <Image
                           src={follower.image}
                           width={35}

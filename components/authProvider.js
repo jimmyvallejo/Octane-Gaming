@@ -28,12 +28,7 @@ const AuthProvider = ({ children }) => {
 
   const authenticateUser = async () => {
     const token = localStorage.getItem("authToken");
-    if (!token) {
-      localStorage.clear();
-      setAuthUser(null);
-      router.push('/')
-      return;
-    }
+  
 
     try {
       const response = await axios.post(`${baseUrl}api/verify`, {
@@ -48,6 +43,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const changeLogout = () => {
+    router.push('/')
     localStorage.clear();
     sessionStorage.clear();
     signOut();
@@ -58,26 +54,23 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
-    if (token || session === undefined || session === null) {
+    if (token) {
       authenticateUser();
     }
-    if (session) {
-      
-      setAuthUser(session.user);
-    }
-    console.log("Session:" ,session)
   }, []);
 
   useEffect(() => {
-     if(!authUser){
-    localStorage.clear();
-    sessionStorage.clear();
-     }
-  },[authUser])
+    if (session) {
+      setAuthUser(session.user);
+    }
+  },[session])
+
+
 
   useEffect(() => {
     const getFollowersFollowing = async () => {
       try {
+        if(authUser){
         const response = await axios.post(
           `${baseUrl}api/getFollowersFollowing`,
           { id: authUser.id }
@@ -85,6 +78,7 @@ const AuthProvider = ({ children }) => {
         console.log(response.data);
         setAuthFollowers(response.data.userData.followers);
         setAuthFollowing(response.data.userData.following);
+        }
       } catch (error) {
         console.log(error);
       }
