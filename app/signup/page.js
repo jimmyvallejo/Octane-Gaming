@@ -10,7 +10,6 @@ import { useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 
-
 const Signup = () => {
   const { authenticateUser, providers } = useContext(AuthContext);
   const [username, setUsername] = useState("");
@@ -23,11 +22,11 @@ const Signup = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if(session) { 
-      router.push("/")
-      setAuthUser(session.user)
+    if (session) {
+      router.push("/");
+      setAuthUser(session.user);
     }
-  },[session])
+  }, [session]);
 
   const handleSubmit = async () => {
     const data = { email: email, username: username, password: password };
@@ -36,16 +35,15 @@ const Signup = () => {
       const signUp = await axios.post(`${baseUrl}api/createUser`, data);
       console.log("User created sucesfully:", signUp.data);
       localStorage.setItem("authToken", signUp.data.token);
-      authenticateUser()
+      authenticateUser();
       if (signUp.status === 201) {
         router.push("/");
       }
     } catch (error) {
       console.log(error);
-      setError(error.response.data)
+      setError(error.response.data);
     }
   };
-
 
   return (
     <div className="text-white flex items-center flex-col text-2xl text-red-500 pt-20 ml-[14%]">
@@ -54,6 +52,7 @@ const Signup = () => {
         <TextField
           variant="outlined"
           label="Email"
+          type="email"
           sx={{
             "& .MuiOutlinedInput-root": {
               "& fieldset": {
@@ -72,7 +71,7 @@ const Signup = () => {
             "& .MuiFormLabel-root": {
               color: "#DC143C",
             },
-            marginTop: 1
+            marginTop: 1,
           }}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -97,13 +96,14 @@ const Signup = () => {
             "& .MuiFormLabel-root": {
               color: "#DC143C",
             },
-            marginTop: 1
+            marginTop: 1,
           }}
           onChange={(e) => setUsername(e.target.value)}
         />
         <TextField
           variant="outlined"
           label="Password"
+          type="password"
           sx={{
             "& .MuiOutlinedInput-root": {
               "& fieldset": {
@@ -122,7 +122,7 @@ const Signup = () => {
             "& .MuiFormLabel-root": {
               color: "#DC143C",
             },
-            marginTop: 1
+            marginTop: 1,
           }}
           onChange={(e) => setPassword(e.target.value)}
         />
@@ -143,27 +143,33 @@ const Signup = () => {
       >
         Submit
       </Button>
-      <div className="mt-5 pt-3 w-full flex flex-col justify-center items-center" >
-      {providers &&
-              Object.values(providers).map((provider) => (
-                
-                <div key={provider.id} className="flex items-center w-[20%] mt-5 border py-2 px-2 justify-center rounded-md ">
-                <Image src={`/assets/icons/${provider.id}.png`} width={35} height={50} alt="google" className="mr-2" />
-                <button
-                  type='button'
-                  key={provider.name}
-                  className="ml-2"
-                  onClick={() => {
-                    signIn(provider.id);
-                  }}
-                  
-                >
-                  Sign up with {provider.name.slice(0, 7)}
-                </button>
-                </div>
-                
-              ))}
-              </div>
+      <div className="mt-5 pt-3 w-full flex flex-col justify-center items-center">
+        {providers &&
+          Object.values(providers).map((provider) => (
+            <div
+              key={provider.id}
+              className="flex items-center w-[20%] mt-5 border py-2 px-2 justify-center rounded-md "
+            >
+              <Image
+                src={`/assets/icons/${provider.id}.png`}
+                width={35}
+                height={50}
+                alt="google"
+                className="mr-2"
+              />
+              <button
+                type="button"
+                key={provider.name}
+                className="ml-2 font-light"
+                onClick={() => {
+                  signIn(provider.id);
+                }}
+              >
+                Sign up with {provider.name.slice(0, 7)}
+              </button>
+            </div>
+          ))}
+      </div>
     </div>
   );
 };

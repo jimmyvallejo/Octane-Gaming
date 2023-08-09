@@ -12,16 +12,12 @@ import { baseUrl } from "@utils/baseUrl";
 
 const Comment = ({ comments, authUser, index, setScroll, scroll }) => {
   const anchor = "bottom";
-
   const [current, setCurrent] = useState(null);
-
   const [getReplies, setGetReplies] = useState([]);
-
   const [reply, setReply] = useState(false);
-
   const [replyText, setReplyText] = useState("");
   const [using, setUsing] = useState(null);
-
+  const [date, setDate] = useState("");
 
   const [state, setState] = useState({
     top: false,
@@ -29,7 +25,6 @@ const Comment = ({ comments, authUser, index, setScroll, scroll }) => {
     bottom: false,
     right: false,
   });
-
 
   useEffect(() => {
     setCurrent(index);
@@ -64,13 +59,12 @@ const Comment = ({ comments, authUser, index, setScroll, scroll }) => {
   };
 
   const handleClose = () => {
-   setUsing(null);
+    setUsing(null);
     toggleDrawer(anchor, false);
   };
 
   const handleReply = async () => {
     try {
-    
       const data = {
         owner: authUser.id,
         ownerName: authUser.username,
@@ -80,8 +74,8 @@ const Comment = ({ comments, authUser, index, setScroll, scroll }) => {
       };
       const reply = await axios.post(`${baseUrl}api/commentReply`, data);
       setGetReplies(reply.data.updatedComment.replies);
-      handleCurrent(index)
-      setUsing(false)
+      handleCurrent(index);
+      setUsing(false);
       toggleDrawer(anchor, false);
       setReplyText("");
     } catch (error) {
@@ -92,7 +86,7 @@ const Comment = ({ comments, authUser, index, setScroll, scroll }) => {
 
   const handleCurrent = () => {
     setReply(!reply);
-    setScroll(!scroll)
+    setScroll(!scroll);
   };
 
   const list = (anchor) => (
@@ -143,6 +137,16 @@ const Comment = ({ comments, authUser, index, setScroll, scroll }) => {
     </Box>
   );
 
+  useEffect(() => {
+    const currentDate = new Date();
+    const timeStamp = new Date(comments.createdAt);
+    const oneDay = 24 * 60 * 60 * 1000;
+    const differenceInDays = Math.floor(
+      (currentDate - timeStamp) / oneDay
+    ).toString();
+    setDate(differenceInDays);
+  }, []);
+
   return (
     <div className="flex items-start justify-start flex flex-col ml-5 mt-5 mb-5 ">
       <div className="flex">
@@ -159,7 +163,7 @@ const Comment = ({ comments, authUser, index, setScroll, scroll }) => {
         {comments.post}
       </p>
       <div className="flex items-center mt-2.5 ml-1">
-        <p className="text-xs">2d ago</p>
+        <p className="text-xs text-slate-300 opacity-90">{date !== "0" ? `${date}d ago` : `Today`}</p>
         <button className="text-xs ml-3" onClick={() => handleCurrent(index)}>
           {getReplies.length} {getReplies.length === 1 ? "reply" : "replies"}
         </button>
@@ -219,4 +223,3 @@ const Comment = ({ comments, authUser, index, setScroll, scroll }) => {
 };
 
 export default Comment;
-

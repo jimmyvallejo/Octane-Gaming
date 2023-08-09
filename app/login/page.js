@@ -14,16 +14,11 @@ const Login = () => {
   const { authenticateUser, setAuthUser, providers } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null)
+  const [error, setError] = useState(null);
 
   const { data: session } = useSession();
 
- 
-
   const router = useRouter();
-
-
-  
 
   const handleSubmit = async () => {
     const data = { email: email, password: password };
@@ -32,19 +27,18 @@ const Login = () => {
       console.log("Message:", login.data);
       localStorage.setItem("authToken", login.data.token);
       authenticateUser();
-      router.push('/')
-
+      router.push("/");
     } catch (error) {
-      setError(error.response.data)
+      setError(error.response.data);
     }
   };
 
   useEffect(() => {
-    if(session) { 
-      router.push("/")
-      setAuthUser(session.user)
+    if (session) {
+      router.push("/");
+      setAuthUser(session.user);
     }
-  },[session])
+  }, [session]);
 
   return (
     <div className="text-white flex items-center flex-col text-2xl text-red-500 pt-20 ml-[14%]">
@@ -53,6 +47,7 @@ const Login = () => {
         <TextField
           variant="outlined"
           label="Email"
+          type="email"
           sx={{
             "& .MuiOutlinedInput-root": {
               "& fieldset": {
@@ -71,13 +66,13 @@ const Login = () => {
             "& .MuiFormLabel-root": {
               color: "#DC143C",
             },
-            
           }}
           onChange={(e) => setEmail(e.target.value)}
         />
         <TextField
           variant="outlined"
           label="Password"
+          type="password"
           sx={{
             "& .MuiOutlinedInput-root": {
               "& fieldset": {
@@ -119,24 +114,30 @@ const Login = () => {
         Submit
       </Button>
       {providers &&
-              Object.values(providers).map((provider) => (
-                <div key={provider.id} className="flex items-center w-[20%] mt-5 border py-2 px-2 justify-center rounded-md ">
-                <Image src={`/assets/icons/${provider.id}.png`} width={35} height={50} alt="google" className="mr-2" />
-                <button
-                  type='button'
-                  key={provider.name}
-                  className="ml-2"
-                  onClick={() => {
-                    signIn(provider.id);
-                  }}
-                  
-                >
-                  Sign in with {provider.name.slice(0, 7)}
-                </button>
-                
-                </div>
-              ))}
-          
+        Object.values(providers).map((provider) => (
+          <div
+            key={provider.id}
+            className="flex items-center w-[20%] mt-5 border py-2 px-2 justify-center rounded-md "
+          >
+            <Image
+              src={`/assets/icons/${provider.id}.png`}
+              width={35}
+              height={50}
+              alt="google"
+              className="mr-2"
+            />
+            <button
+              type="button"
+              key={provider.name}
+              className="ml-2 font-light"
+              onClick={() => {
+                signIn(provider.id);
+              }}
+            >
+              Sign in with {provider.name.slice(0, 7)}
+            </button>
+          </div>
+        ))}
     </div>
   );
 };

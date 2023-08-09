@@ -17,12 +17,12 @@ export const POST = async (req, res) => {
 
     const foundUsername = await User.findOne({ username });
     if (foundUsername) {
-      return new Response("Username is already taken.", {status: 401});
+      return new Response("Username is already taken.", { status: 401 });
     }
 
     const foundEmail = await User.findOne({ email });
     if (foundEmail) {
-      return new Response("Email is already taken.", {status: 401});
+      return new Response("Email is already taken.", { status: 401 });
     }
 
     const salt = bcrypt.genSaltSync(saltRounds);
@@ -40,7 +40,7 @@ export const POST = async (req, res) => {
       username: newUser.username,
       image: newUser.image,
       following: newUser.following,
-      followers: newUser.followers
+      followers: newUser.followers,
     };
 
     const token = jwt.sign(payload, process.env.SECRET, {
@@ -50,7 +50,9 @@ export const POST = async (req, res) => {
 
     console.log("Token:", token, "Payload:", payload);
 
-    return new Response(JSON.stringify({ token, id: newUser._id, payload }), { status: 201});
+    return new Response(JSON.stringify({ token, id: newUser._id, payload }), {
+      status: 201,
+    });
   } catch (error) {
     console.log(error);
 

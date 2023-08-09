@@ -1,9 +1,9 @@
-import NextAuth from 'next-auth';
-import GoogleProvider from 'next-auth/providers/google';
-import TwitterProvider from 'next-auth/providers/twitter';
+import NextAuth from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
+import TwitterProvider from "next-auth/providers/twitter";
 import GitHubProvider from "next-auth/providers/github";
-import User from '@models/user';
-import { connectToDB } from '@utils/database';
+import User from "@models/user";
+import { connectToDB } from "@utils/database";
 
 const handler = NextAuth({
   providers: [
@@ -29,7 +29,7 @@ const handler = NextAuth({
       session.user.email = sessionUser.email.toString();
       session.user.followers = sessionUser.followers;
       session.user.following = sessionUser.following;
-      session.user.image = sessionUser.image
+      session.user.image = sessionUser.image;
 
       console.log(session);
       return session;
@@ -45,14 +45,14 @@ const handler = NextAuth({
         if (!userExists) {
           await User.create({
             email: profile.email,
-            username: profile.name.replace(' ', '').toLowerCase(),
+            username: profile.name.replace(" ", "").toLowerCase(),
             image: profile.picture,
           });
         }
 
         return true;
       } catch (error) {
-        console.log('Error checking if user exists: ', error.message);
+        console.log("Error checking if user exists: ", error.message);
         return false;
       }
     },

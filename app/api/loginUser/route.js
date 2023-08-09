@@ -19,10 +19,10 @@ export const POST = async (req, res) => {
 
     const doesMatch = await bcrypt.compare(password, foundUser.password);
 
-    if(!doesMatch) {
-        return new Response("Password is incorrect.", {
-          status: 401,
-        });
+    if (!doesMatch) {
+      return new Response("Password is incorrect.", {
+        status: 401,
+      });
     }
 
     if (doesMatch) {
@@ -32,7 +32,7 @@ export const POST = async (req, res) => {
         username: foundUser.username,
         image: foundUser.image,
         following: foundUser.following,
-        followers: foundUser.followers
+        followers: foundUser.followers,
       };
       const token = jwt.sign(payload, process.env.SECRET, {
         algorithm: "HS256",

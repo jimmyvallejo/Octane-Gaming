@@ -4,18 +4,16 @@ import Video from "@models/video";
 export const POST = async (req) => {
   const { clipId } = await req.json();
 
-
-
   try {
     await connectToDB();
 
     const video = await Video.findById(clipId);
 
-    console.log(video)
+    console.log(video);
 
     const views = video.views + 1;
 
-    console.log(views)
+    console.log(views);
 
     await Video.findByIdAndUpdate(clipId, { views: views }, { new: true });
 

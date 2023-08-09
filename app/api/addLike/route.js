@@ -10,7 +10,6 @@ export const POST = async (req) => {
 
     const foundUser = await User.findById(userId);
 
-
     if (foundUser.liked.includes(clipId)) {
       const removedLike = await User.findByIdAndUpdate(
         userId,

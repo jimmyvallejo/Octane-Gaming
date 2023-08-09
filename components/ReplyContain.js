@@ -1,11 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
 const Reply = ({ reply }) => {
+  
+  const [date, setDate] = useState("")
 
-    useEffect(() => {
-        console.log(reply)
-    },[])
+  useEffect(() => {
+    const currentDate = new Date();
+    const timeStamp = new Date(reply.createdAt);
+    const oneDay = 24 * 60 * 60 * 1000; 
+     const differenceInDays = Math.floor((currentDate - timeStamp) / oneDay).toString();
+     setDate(differenceInDays)
+  },[])
+
 
   return (
     <div className=" flex items-start justify-start flex flex-col mt-5 mb-5">
@@ -19,11 +26,9 @@ const Reply = ({ reply }) => {
         />
         <h1 className="text-white"> {reply.ownerName} </h1>
       </div>
-      <p className=" min-w-[87%] max-w-[87%]  rounded-md ml-11">
-        {reply.post}
-      </p>
+      <p className=" min-w-[87%] max-w-[87%]  rounded-md ml-11">{reply.post}</p>
       <div className="flex items-center mt-2.5 ml-1">
-        <p className="text-xs">2d ago</p>
+        <p className="text-xs text-slate-300 opacity-90">{date !== "0" ? `${date}d ago` : `Today`}</p>
       </div>
     </div>
   );

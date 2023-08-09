@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 export const POST = async (req) => {
-  const {Token} = await req.json();
+  const { Token } = await req.json();
 
   try {
     if (!Token || Token === "null") {

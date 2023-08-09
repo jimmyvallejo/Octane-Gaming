@@ -8,8 +8,7 @@ import { AuthContext } from "./authProvider";
 import { ClipContext } from "./clipProvider";
 import { useContext } from "react";
 import SwipeableTemporaryDrawer from "./swipeabledrawer";
-import { Button } from "@mui/material";
-import Link from "next/link";
+import ClipInfo from "./ClipInfo";
 
 export const Clip = ({ clip, index, lastClip, refreshCount, handleTop }) => {
   const { authUser, setAuthUser } = useContext(AuthContext);
@@ -20,10 +19,10 @@ export const Clip = ({ clip, index, lastClip, refreshCount, handleTop }) => {
   const [commentlength, setCommentLength] = useState(
     clipCurrent.comments.length
   );
-  const [comment, setComment] = useState(true)
+  const [comment, setComment] = useState(true);
   const [playing, setPlaying] = useState(true);
   const [heart, setHeart] = useState(null);
-  
+
   const playerRef = useRef(null);
   const [commentText, setCommentText] = useState("");
   const [using, setUsing] = useState(null);
@@ -102,8 +101,6 @@ export const Clip = ({ clip, index, lastClip, refreshCount, handleTop }) => {
     }
   };
 
-
-
   const handleSubmitComment = async () => {
     const comment = {
       post: commentText,
@@ -121,11 +118,11 @@ export const Clip = ({ clip, index, lastClip, refreshCount, handleTop }) => {
 
       console.log("Created comment:", createdComment);
       setClipCurrent(createdComment.data.updatedvid);
-      setComment(false)
-      setComment(true)
+      setComment(false);
+      setComment(true);
       setCommentText("");
       setUsing(null);
-    
+
       setCommentLength((prevCount) => prevCount + 1);
     } catch (error) {
       console.log(error);
@@ -182,15 +179,14 @@ export const Clip = ({ clip, index, lastClip, refreshCount, handleTop }) => {
             url={clip.url}
             width={`80%`}
             height={`100%`}
-          
             controls={true}
             onPlay={handleView}
             ref={playerRef}
             playing={playing}
           />
-      
-      {comment && <SwipeableTemporaryDrawer
-           
+
+          {comment && (
+            <SwipeableTemporaryDrawer
               handleSubmitComment={handleSubmitComment}
               commentText={commentText}
               setCommentText={setCommentText}
@@ -199,124 +195,32 @@ export const Clip = ({ clip, index, lastClip, refreshCount, handleTop }) => {
               clip={clipCurrent}
               authUser={authUser}
             />
-      }
-      
-            <div></div>
-       
+          )}
         </div>
       ) : (
         <div className="loader"></div>
       )}
-
-      <div className=" w-[78%] h-full  mb-4 ml-4 pt-5 vidInfo rounded-lg ">
-        <div className="flex flex-row justify-between w-full h-full">
-          <div className="flex flex-row ml-5 justify-start w-full h-[100%]">
-            <Link href={`/profile/${clip.ownerName}`}>
-            <div className="flex flex-row items-start">
-              <Image
-                src={
-                  clip.image
-                    ? clip.image
-                    : `https://www.svgrepo.com/show/259535/game-controller.svg`
-                }
-                width={70}
-                height={70}
-                alt="user picture"
-                className="mr-5 "
-              />
-              <div>
-                <h1 className="text-2xl">{clip.ownerName}</h1>
-                <p className="mt-2 text-xl">{clip.description}</p>
-              </div>
-            </div>
-            </Link>
-            {authUser && authUser.id !== clipCurrent.ownerId._id && (
-              <Button
-                className=" ml-5 h-10 mt-2 followbutton"
-                variant={!followed ? "outlined" : "outlined"}
-                sx={{
-                  borderColor: !followed ? "rgb(168 85 247)" : "default",
-                  ":hover": {
-                    borderColor: !followed ? "default" : "rgb(168 85 247)",
-                  },
-                  color: !followed ? "white" : "white",
-                }}
-                onClick={handleFollow}
-              >
-                {!followed ? "Follow" : "Unfollow"}
-              </Button>
-            )}
-          </div>
-          <div className="  flex flex-row justify-around w-[30%] items-start ">
-            <div className={`mr-2 flex flex-row items-center justify-center`}>
-              <Image
-                src="/assets/images/play-button.png"
-                width={40}
-                height={40}
-                alt="views"
-              />
-
-              <h3 className="text-l ml-1 mt-1">{views}</h3>
-            </div>
-
-            {authUser && (
-              <div className="flex flex-row items-center z-10">
-                <Image
-                  src={
-                    !heart
-                      ? `/assets/icons/heart.png`
-                      : `https://www.svgrepo.com/show/397697/red-heart.svg`
-                  }
-                  width={40}
-                  height={40}
-                  alt="likes"
-                  className="mr-2 cursor-pointer mt-1"
-                  onClick={handleLike}
-                />
-                <h3 className="text-l">{likes}</h3>
-              </div>
-            )}
-            {!authUser && (
-              <div className="flex items-center flex-row">
-                <Image
-                  src={`/assets/icons/heart.png`}
-                  width={43}
-                  height={43}
-                  alt="likes"
-                  className=""
-                />
-                <h3 className="text-l">{likes}</h3>
-              </div>
-            )}
-
-            <div className="flex flex-row items-center ">
-              <Image
-                src={ `/assets/icons/chat.png`
-                   
-                }
-                width={`45`}
-                height={`45`}
-                alt="comments"
-                className="mr-2 ml-1"
-               
-              />
-              <h3 className="text-l">{commentlength}</h3>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      <ClipInfo
+        clip={clip}
+        views={views}
+        commentlength={commentlength}
+        handleLike={handleLike}
+        handleFollow={handleFollow}
+        authUser={authUser}
+        clipCurrent={clipCurrent}
+        followed={followed}
+        heart={heart}
+        likes={likes}
+      />
       {index === lastClip ? (
-        
-          <Image
-            src={"https://www.svgrepo.com/show/274026/refresh.svg"}
-            width={40}
-            height={40}
-            className=" cursor-pointer spinner place-self-center mr-80  mb-6 "
-            onClick={() => handleNewVids()}
-            alt="refresh"
-          ></Image>
-       
+        <Image
+          src={"https://www.svgrepo.com/show/274026/refresh.svg"}
+          width={40}
+          height={40}
+          className=" cursor-pointer spinner place-self-center mr-80  mb-6 "
+          onClick={() => handleNewVids()}
+          alt="refresh"
+        ></Image>
       ) : (
         <div></div>
       )}

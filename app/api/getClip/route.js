@@ -1,14 +1,14 @@
 import { connectToDB } from "@utils/database";
 import { Video } from "../models";
 
-export const POST= async (req) => {
+export const POST = async (req) => {
   try {
-    const { id } = await req.json()
-    console.log(id)
-    
+    const { id } = await req.json();
+    console.log(id);
+
     connectToDB();
 
-    const clipData = await Video.findById(id).populate("comments")
+    const clipData = await Video.findById(id).populate("comments");
 
     return new Response(JSON.stringify({ clip: clipData }), {
       status: 201,

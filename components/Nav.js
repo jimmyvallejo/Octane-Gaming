@@ -5,14 +5,13 @@ import { AuthContext } from "./authProvider";
 import { ClipContext } from "./clipProvider";
 import { useContext } from "react";
 import Image from "next/image";
-import {  InputAdornment, TextField } from "@mui/material";
+import { InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { signOut } from "next-auth/react";
 
 
 const Nav = () => {
   const { changeLogout, authUser } = useContext(AuthContext);
-  const {getRandomClips} = useContext(ClipContext)
+  const { getRandomClips } = useContext(ClipContext);
 
   return (
     <div className="flex fixed nav items-center ">
@@ -25,7 +24,6 @@ const Nav = () => {
             className=" rounded-md"
             alt="logo"
             onClick={getRandomClips}
-           
           />
         </Link>
         <div className="flex  w-[20%]">
@@ -54,7 +52,7 @@ const Nav = () => {
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end" sx={{ marginBottom: 2 }}>
-                  <SearchIcon sx={{color: "grey"}} />
+                  <SearchIcon sx={{ color: "grey" }} />
                 </InputAdornment>
               ),
             }}
@@ -73,9 +71,9 @@ const Nav = () => {
           <div className="p-3 flex items-center">
             {" "}
             <div className="border py-1 rounded-sm hover:border-violet-500 transition ease-in-out duration-200">
-            <Link className="p-3" href="/upload">
-             + Upload
-            </Link>
+              <Link className="p-3" href="/upload">
+                + Upload
+              </Link>
             </div>
             <a className="p-3 cursor-pointer" onClick={changeLogout}>
               Logout

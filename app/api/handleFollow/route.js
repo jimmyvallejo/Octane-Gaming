@@ -41,23 +41,24 @@ export const POST = async (req) => {
         { $push: { following: clipOwner } },
         { new: true }
       );
-    
-       const addClipOwnerFollower = await User.findByIdAndUpdate(clipOwner, {
-         $push: { followers: currentUser } },
-         {new: true}
-       );
-        return new Response(
-          JSON.stringify({
-            removed: false,
-            message: "Follow was Added",
-            updatedCurrent: addFollowing,
-            updatedClipUser: addClipOwnerFollower,
-          }),
-          { status: 201 }
-        );
+
+      const addClipOwnerFollower = await User.findByIdAndUpdate(
+        clipOwner,
+        {
+          $push: { followers: currentUser },
+        },
+        { new: true }
+      );
+      return new Response(
+        JSON.stringify({
+          removed: false,
+          message: "Follow was Added",
+          updatedCurrent: addFollowing,
+          updatedClipUser: addClipOwnerFollower,
+        }),
+        { status: 201 }
+      );
     }
-
-
   } catch (error) {
     console.log(error);
   }

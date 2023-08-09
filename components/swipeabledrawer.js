@@ -13,7 +13,6 @@ import { useTheme } from "@mui/material/styles";
 import theme from "./materialUi/materialUi";
 
 export default function SwipeableTemporaryDrawer({
-
   handleSubmitComment,
   setCommentText,
   commentText,
@@ -21,11 +20,9 @@ export default function SwipeableTemporaryDrawer({
   setUsing,
   clip,
   authUser,
- 
 }) {
   const [updatedClip, setUpdatedClip] = useState(null);
-  const [scroll, setScroll] = useState(null)
-
+  const [scroll, setScroll] = useState(null);
 
   const divRef = useRef();
 
@@ -34,9 +31,8 @@ export default function SwipeableTemporaryDrawer({
   };
 
   useEffect(() => {
-      handleScroll();
+    handleScroll();
   }, [scroll]);
-
 
   const themed = useTheme(theme);
 

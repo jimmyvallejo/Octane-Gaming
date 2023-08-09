@@ -1,4 +1,4 @@
-'use server'
+"use server";
 import { v2 as cloudinary } from "cloudinary";
 
 const cloudinaryConfig = cloudinary.config({
@@ -17,4 +17,4 @@ export const getSignature = async () => {
   );
 
   return { timestamp, signature };
-}
+};

@@ -16,7 +16,6 @@ export const POST = async (req) => {
       likes: [],
       replies: [],
     });
- 
 
     const addToComment = await Comment.findByIdAndUpdate(
       commentId,

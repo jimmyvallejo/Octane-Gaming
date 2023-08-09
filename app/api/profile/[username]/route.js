@@ -5,7 +5,7 @@ export const GET = async (req, { params }) => {
   try {
     await connectToDB();
 
-    console.log(params)
+    console.log(params);
 
     const profile = await User.findOne({ username: params.username })
       .populate("followers")
