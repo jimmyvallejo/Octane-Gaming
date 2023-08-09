@@ -7,13 +7,20 @@ import axios from "axios";
 import { baseUrl } from "@utils/baseUrl";
 import { Button } from "@mui/material";
 import MiniPlayer from "@components/MiniPlayer";
+import { useParams } from 'next/navigation'
+import ProfileModal from "@components/Modal";
 
 const Profile = () => {
   const { authUser } = useContext(AuthContext);
   const [profileDetails, setProfileDetails] = useState(null);
   const [edit, setEdit] = useState(null);
   const [currentVideos, setCurrentVideos] = useState(null)
- 
+  const [fetch, setFetch] = useState(null)
+
+  const params = useParams()
+
+  const [showModal, setShowModal] = useState(false);
+
 
   useEffect(() => {
     if (profileDetails) console.log("Current videos:", currentVideos);
@@ -23,7 +30,7 @@ const Profile = () => {
     const getProfile = async () => {
       try {
         const profile = await axios.get(
-          `${baseUrl}api/profile/${authUser.username}`
+          `${baseUrl}api/profile/${params.username}`
         );
         setProfileDetails(profile.data);
         setCurrentVideos(profile.data.videos);
@@ -31,17 +38,23 @@ const Profile = () => {
         console.log(error);
       }
     };
+
     getProfile();
-  }, []);
+    console.log("Params:", params)
+  }, [fetch]);
+
+
+ 
 
   return profileDetails ? (
-    <div className="flex flex-col pt-20 w-[86%] ml-[14%] h-screen">
+    <div className="flex flex-col w-[86%] ml-[14%] h-screen">
+      <ProfileModal showModal={showModal} setShowModal={setShowModal} profileDetails={profileDetails} edit={edit} setEdit={setEdit} setFetch={setFetch} fetch={fetch} />
       <div className=" flex flex-row  pl-3">
         <Image src={profileDetails.image} width={150} height={80} />
         <div className="flex flex-col ml-10">
           <h1 className="text-4xl">{profileDetails.username}</h1>
           <h1 className="text-xl mt-2">{profileDetails.email}</h1>
-          <Button
+          {params.username === authUser.username && <Button
             className="mr-5 h-10 mt-3 followbutton"
             variant={!edit ? "outlined" : "outlined"}
             sx={{
@@ -50,11 +63,13 @@ const Profile = () => {
                 borderColor: !edit ? "default" : "#6c0736",
               },
               color: !edit ? "white" : "white",
+              marginTop: "10px"
             }}
-            onClick={() => setEdit(!edit)}
+            onClick={() => setShowModal(prev => !prev)}
           >
             Edit Profile
           </Button>
+}
         </div>
       </div>
       <div className="flex flex-row mt-3 pl-3 ">

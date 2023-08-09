@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState, useContext } from "react";
 import { AuthContext } from "./authProvider";
 import { ClipContext } from "./clipProvider";
 import { useDropzone } from "react-dropzone";
-import { ArrowUpTrayIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { ArrowUpTrayIcon} from "@heroicons/react/24/solid";
 import Image from "next/image";
 import axios from "axios";
 import { getSignature } from "@app/cloudinary";
@@ -44,6 +44,7 @@ const Dropzone = ({ className }) => {
   });
 
   useEffect(() => {
+    console.log(files)
     return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
   }, [files]);
 
@@ -79,7 +80,7 @@ const Dropzone = ({ className }) => {
 
 
 
-    const endpoint = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_URL;
+    const endpoint = process.env.NEXT_PUBLIC_CLOUDINARY_VIDEO_URL;
 
     for (let pair of formData.entries()) {
       console.log(pair[0] + ", " + pair[1]);
@@ -100,7 +101,7 @@ const Dropzone = ({ className }) => {
         image: authUser.image
      }
 
-     console.log("VideoObj:", videoObj)
+  
     const postedToDb = await axios.post(`${baseUrl}api/fileUpload`, videoObj)
 
     const dbResult = postedToDb.data

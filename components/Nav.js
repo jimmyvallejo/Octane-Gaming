@@ -27,18 +27,14 @@ const Nav = () => {
            
           />
         </Link>
-        <div>
+        <div className="flex  w-[20%]">
           <TextField
             id="search"
             type="search"
             sx={{
-              width: 350,
+              width: "100%",
               height: 40,
               backgroundColor: "#191b1f",
-              marginRight: "140px",
-           
-              
-
               ".MuiOutlinedInput-root": {
                 "& fieldset": {
                   border: "none",
@@ -61,7 +57,6 @@ const Nav = () => {
                 </InputAdornment>
               ),
             }}
-            className="ml-5 search"
           />
         </div>
         {!authUser ? (

@@ -10,6 +10,8 @@ const martelSans = Martel_Sans({
   subsets: ["latin"],
 });
 
+export const mobileService = 1000;
+
 const SideNav = () => {
   const { changeLogout, authUser, authFollowers } = useContext(AuthContext);
 
@@ -18,9 +20,9 @@ const SideNav = () => {
       <div className="sideNav fixed h-screen flex flex-col items-start tracking-normal  uppercase font-bold">
         <div className="flex flex-col justify-start w-full mt-3 border-b border-gray-500">
           {authUser && (
-            <div className="flex  flex-col items-center  justify-around h-60 mr-5 w-full pointer text-xl">
-              <div className="flex flex-row items-center justify-between w-[97%] rounded py-3 hover:bg-gray-800">
-                <div className="flex flex-row items-center ml-3">
+            <div className="flex shrink-0 flex-col items-center  justify-around h-60 mr-5 w-full pointer text-xl">
+              <div className="flex shrink-0 flex-row items-center justify-between w-[97%] rounded py-3 hover:bg-gray-800">
+                <div className="flex shrink-0 flex-row items-center ml-3">
                   <Image
                     src={`/assets/icons/customer.png`}
                     width={35}
@@ -28,12 +30,14 @@ const SideNav = () => {
                     alt="profile"
                   />
 
+              {window.innerWidth > mobileService && 
                   <Link
                     className="ml-2 text-l mt-2 text-gray-300 "
-                    href={`/profile`}
+                    href={`/profile/${authUser.username}`}
                   >
                     Profile
                   </Link>
+                 }
                 </div>
               </div>
               <div className="flex flex-row items-center justify-between w-[97%] rounded py-3 hover:bg-gray-800">
@@ -44,12 +48,14 @@ const SideNav = () => {
                     height={35}
                     alt="profile"
                   />
+                   {window.innerWidth > mobileService && 
                   <Link
                     className="ml-2 text-l mt-2 text-gray-300"
                     href={`/upload`}
                   >
                     Upload
                   </Link>
+                 }
                 </div>
               </div>
               <div className="flex flex-row items-center justify-between w-[97%] rounded py-3 hover:bg-gray-800 ">
@@ -60,25 +66,27 @@ const SideNav = () => {
                     height={32}
                     alt="logout"
                   />
+                   {window.innerWidth > mobileService && 
                   <a
                     className="ml-3 text-l  text-gray-300"
                     onClick={changeLogout}
                   >
                     Logout
                   </a>
+                  }
                 </div>
               </div>
             </div>
           )}
           {!authUser && <h1 className="text-md ml-2 mb-1 mt-2">Sign in to use DashBoard</h1>}
         </div>
-        {authUser && 
+        {authUser && window.innerWidth > mobileService && 
         <div className="flex flex-col justify-between  rounded py-3 mt-3 w-full ">
           <h1 className="flex justify-center mr-4 text-sm tracking-normal">Recent Followers</h1>
         {authUser && authUser.followers.length > 0 && authFollowers && authFollowers.slice(0, 5).map((follower, index) =>  {
         return (
-        
-            <div key={index} className="flex flex-row items-center my-3 rounded  hover:bg-gray-800 w-[97%] ml-1 border border-gray-800 p-2">
+          <Link key={index} href={`/profile/${follower.username}`}>
+            <div  className="flex flex-row items-center my-3 rounded  hover:bg-gray-800 w-[97%] ml-1 border border-gray-800 p-2">
                   <Image
                     src={follower.image}
                     width={35}
@@ -94,6 +102,7 @@ const SideNav = () => {
                     {follower.username}
                   </h1>
                 </div>
+                </Link>
 
 
 

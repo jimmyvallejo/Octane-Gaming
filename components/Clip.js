@@ -9,6 +9,7 @@ import { ClipContext } from "./clipProvider";
 import { useContext } from "react";
 import SwipeableTemporaryDrawer from "./swipeabledrawer";
 import { Button } from "@mui/material";
+import Link from "next/link";
 
 export const Clip = ({ clip, index, lastClip, refreshCount, handleTop }) => {
   const { authUser, setAuthUser } = useContext(AuthContext);
@@ -210,6 +211,7 @@ export const Clip = ({ clip, index, lastClip, refreshCount, handleTop }) => {
       <div className=" w-[78%] h-full  mb-4 ml-4 pt-5 vidInfo rounded-lg ">
         <div className="flex flex-row justify-between w-full h-full">
           <div className="flex flex-row ml-5 justify-start w-full h-[100%]">
+            <Link href={`/profile/${clip.ownerName}`}>
             <div className="flex flex-row items-start">
               <Image
                 src={
@@ -227,6 +229,7 @@ export const Clip = ({ clip, index, lastClip, refreshCount, handleTop }) => {
                 <p className="mt-2 text-xl">{clip.description}</p>
               </div>
             </div>
+            </Link>
             {authUser && authUser.id !== clipCurrent.ownerId._id && (
               <Button
                 className=" ml-5 h-10 mt-2 followbutton"

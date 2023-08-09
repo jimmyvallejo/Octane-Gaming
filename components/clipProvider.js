@@ -65,7 +65,7 @@ const ClipProvider = ({ children }) => {
  
 
   return (
-    <ClipContext.Provider value={{ clips, setuploadCount, contextLikes, setcontextLikes, commentAmount, setCommentAmount, getClips, getRandomClips, loading, setLoading }}>
+    <ClipContext.Provider value={{ clips, setClips, setuploadCount, contextLikes, setcontextLikes, commentAmount, setCommentAmount, getClips, getRandomClips, loading, setLoading }}>
       {children}
     </ClipContext.Provider>
   );
