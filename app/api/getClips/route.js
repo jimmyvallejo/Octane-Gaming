@@ -10,7 +10,7 @@ export const GET = async () => {
 
       const clips = await Video.find().populate("comments").populate("ownerId");
 
-     
+   
       return new Response(JSON.stringify({ clips: clips }), {
        status: 201,
      });

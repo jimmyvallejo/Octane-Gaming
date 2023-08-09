@@ -7,28 +7,23 @@ import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 import axios from "axios";
 import { baseUrl } from "@utils/baseUrl";
-import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 
 const Login = () => {
-  const { authenticateUser, setAuthUser } = useContext(AuthContext);
+  const { authenticateUser, setAuthUser, providers } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null)
 
   const { data: session } = useSession();
 
-  const [providers, setProviders] = useState(null);
+ 
 
   const router = useRouter();
 
-  useEffect(() => {
-    (async () => {
-      const res = await getProviders();
-      setProviders(res);
-      console.log(res)
-    })();
-  }, []);
+
+  
 
   const handleSubmit = async () => {
     const data = { email: email, password: password };
@@ -46,15 +41,15 @@ const Login = () => {
 
   useEffect(() => {
     if(session) { 
-      setAuthUser(session.user)
       router.push("/")
+      setAuthUser(session.user)
     }
   },[session])
 
   return (
     <div className="text-white flex items-center flex-col text-2xl text-red-500 pt-20 ml-[14%]">
       <h1 className="mb-5">Login</h1>
-      <div>
+      <div className="flex flex-col justify-center w-[18%]">
         <TextField
           variant="outlined"
           label="Email"
@@ -76,7 +71,7 @@ const Login = () => {
             "& .MuiFormLabel-root": {
               color: "#DC143C",
             },
-            marginRight: "5px",
+            
           }}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -101,7 +96,7 @@ const Login = () => {
             "& .MuiFormLabel-root": {
               color: "#DC143C",
             },
-            marginLeft: "5px",
+            marginTop: 1,
           }}
           onChange={(e) => setPassword(e.target.value)}
         />
@@ -119,23 +114,26 @@ const Login = () => {
         variant="outlined"
         endIcon={<SendIcon />}
         onClick={handleSubmit}
+        className="mb-5"
       >
         Submit
       </Button>
       {providers &&
               Object.values(providers).map((provider) => (
-                <div key={provider.id} className="flex items-center w-[15%]  justify-around mt-10 ">
+                <div key={provider.id} className="flex items-center w-[20%] mt-5 border py-2 px-2 justify-center rounded-md ">
+                <Image src={`/assets/icons/${provider.id}.png`} width={35} height={50} alt="google" className="mr-2" />
                 <button
                   type='button'
                   key={provider.name}
+                  className="ml-2"
                   onClick={() => {
                     signIn(provider.id);
                   }}
                   
                 >
-                  Sign in with: 
+                  Sign in with {provider.name.slice(0, 7)}
                 </button>
-                <Image src={`/assets/icons/google.png`} width={35} height={50} alt="google" />
+                
                 </div>
               ))}
           

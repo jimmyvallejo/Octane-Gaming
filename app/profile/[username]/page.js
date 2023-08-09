@@ -64,7 +64,7 @@ const Profile = () => {
         <div className="flex flex-col ml-10">
           <h1 className="text-4xl">{profileDetails.username}</h1>
           <h1 className="text-xl mt-2">{profileDetails.email}</h1>
-          {params.username === authUser.username && <Button
+          {authUser&& params.username === authUser.username && <Button
             className="mr-5 h-10 mt-3 followbutton"
             variant={!edit ? "outlined" : "outlined"}
             sx={{

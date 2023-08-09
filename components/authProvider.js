@@ -3,7 +3,8 @@ import { useEffect, createContext, useState } from "react";
 import axios from "axios";
 import { baseUrl } from "@utils/baseUrl";
 import { useRouter } from "next/navigation";
-import { signOut, useSession } from "next-auth/react";
+import { signOut, useSession, getProviders } from "next-auth/react";
+
 
 
 const AuthContext = createContext();
@@ -16,6 +17,16 @@ const AuthProvider = ({ children }) => {
   const {data: session} = useSession()
   
   const router = useRouter();
+
+  const [providers, setProviders] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      const res = await getProviders();
+      setProviders(res);
+      console.log(res)
+    })();
+  }, []);
 
   const authenticateUser = async () => {
     const token = localStorage.getItem("authToken");
@@ -36,12 +47,13 @@ const AuthProvider = ({ children }) => {
   };
 
   const changeLogout = () => {
+    router.push('/login')
     localStorage.clear();
     signOut()
+    setAuthFollowing(null)
+    setAuthFollowing(null)
     setAuthUser(null);
-    setAuthFollowing(null)
-    setAuthFollowing(null)
-    router.push('/')
+    
   };
 
   useEffect(() => {
@@ -67,6 +79,8 @@ const AuthProvider = ({ children }) => {
       }
     }
    getFollowersFollowing()
+
+   if(!authUser) router.push('/')
    },[authUser])
 
    useEffect(() => {
@@ -76,7 +90,7 @@ const AuthProvider = ({ children }) => {
    }, [authUser]);
 
   return (
-    <AuthContext.Provider value={{ authenticateUser, changeLogout, authUser, setAuthUser, authFollowers, authFollowing }}>
+    <AuthContext.Provider value={{ authenticateUser, changeLogout, authUser, setAuthUser, authFollowers, authFollowing, providers }}>
       {children}
     </AuthContext.Provider>
   );
