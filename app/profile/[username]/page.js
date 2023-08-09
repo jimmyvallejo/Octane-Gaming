@@ -11,7 +11,7 @@ import { useParams } from "next/navigation";
 import ProfileModal from "@components/Modal";
 
 const Profile = () => {
-  const { authUser } = useContext(AuthContext);
+  const { authUser, session } = useContext(AuthContext);
   const [profileDetails, setProfileDetails] = useState(null);
   const [edit, setEdit] = useState(null);
   const [currentVideos, setCurrentVideos] = useState(null);
@@ -21,6 +21,7 @@ const Profile = () => {
   const params = useParams();
 
   const [showModal, setShowModal] = useState(false);
+
 
   useEffect(() => {
     if (profileDetails) console.log("Current videos:", currentVideos);
@@ -69,7 +70,7 @@ const Profile = () => {
         <div className="flex flex-col ml-10">
           <h1 className="text-4xl">{profileDetails.username}</h1>
           <h1 className="text-xl mt-2">{profileDetails.email}</h1>
-          {authUser && params.username === authUser.username && (
+          {authUser && params.username === authUser.username && session === undefined || session === null && (
             <Button
               className="mr-5 h-10 mt-3 followbutton"
               variant={!edit ? "outlined" : "outlined"}

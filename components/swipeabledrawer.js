@@ -23,6 +23,7 @@ export default function SwipeableTemporaryDrawer({
 }) {
   const [updatedClip, setUpdatedClip] = useState(null);
   const [scroll, setScroll] = useState(null);
+  const [comments, setComments] = useState([])
 
   const divRef = useRef();
 
@@ -49,6 +50,7 @@ export default function SwipeableTemporaryDrawer({
 
   useEffect(() => {
     setUpdatedClip(clip);
+    setComments(clip.comments.reverse())
   }, [using]);
 
   useEffect(() => {
@@ -130,7 +132,7 @@ export default function SwipeableTemporaryDrawer({
           className={`overflow-y-scroll w-full h-[88.2%] rounded-md flex flex-col commentContain`}
           ref={divRef}
         >
-          {updatedClip.comments.map((comments, index) => {
+          {comments.map((comments, index) => {
             return (
               <Comment
                 key={comments._id}

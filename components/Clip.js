@@ -198,7 +198,7 @@ export const Clip = ({ clip, index, lastClip, refreshCount, handleTop }) => {
           )}
         </div>
       ) : (
-        <div className="loader"></div>
+        <div className="text-3xl flex items-center justify-center w-[100%] h-screen ml-[14%] clip border">Loading...</div>
       )}
       <ClipInfo
         clip={clip}

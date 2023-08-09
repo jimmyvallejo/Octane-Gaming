@@ -31,6 +31,7 @@ const AuthProvider = ({ children }) => {
     if (!token) {
       localStorage.clear();
       setAuthUser(null);
+      router.push('/')
       return;
     }
 
@@ -48,6 +49,7 @@ const AuthProvider = ({ children }) => {
 
   const changeLogout = () => {
     localStorage.clear();
+    sessionStorage.clear();
     signOut();
     setAuthFollowing(null);
     setAuthFollowing(null);
@@ -56,13 +58,22 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
-    if (token) {
+    if (token || session === undefined || session === null) {
       authenticateUser();
     }
     if (session) {
+      
       setAuthUser(session.user);
     }
+    console.log("Session:" ,session)
   }, []);
+
+  useEffect(() => {
+     if(!authUser){
+    localStorage.clear();
+    sessionStorage.clear();
+     }
+  },[authUser])
 
   useEffect(() => {
     const getFollowersFollowing = async () => {
@@ -80,14 +91,14 @@ const AuthProvider = ({ children }) => {
     };
     getFollowersFollowing();
 
-    if (!authUser) router.push("/");
+    
   }, [authUser]);
 
   useEffect(() => {
     console.log("This is authuser:", authUser);
     console.log("This is Following:", authFollowers);
     console.log("This is followers:", authFollowing);
-  }, [authUser]);
+  }, [authFollowers, authFollowing, authUser]);
 
   return (
     <AuthContext.Provider
@@ -99,6 +110,7 @@ const AuthProvider = ({ children }) => {
         authFollowers,
         authFollowing,
         providers,
+        session
       }}
     >
       {children}

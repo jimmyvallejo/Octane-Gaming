@@ -9,7 +9,8 @@ const ClipProvider = ({ children }) => {
   const [uploadcount, setuploadCount] = useState(0);
   const [contextLikes, setcontextLikes] = useState(null);
   const [commentAmount, setCommentAmount] = useState(null);
-  const [loading, setLoading] = useState(null);
+  const [loading, setLoading] = useState(true);
+   const [clips, setClips] = useState([]);
 
   const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -18,11 +19,11 @@ const ClipProvider = ({ children }) => {
     }
   };
 
-  const [clips, setClips] = useState([]);
+ 
 
   const getRandomClips = async () => {
     try {
-      setLoading(true);
+      
       setClips([]);
       const result = await axios.get(`${baseUrl}api/getClips`);
       console.log(result.data);
@@ -40,7 +41,6 @@ const ClipProvider = ({ children }) => {
 
   const getClips = async () => {
     try {
-      setLoading(true);
       setClips([]);
       const result = await axios.get(`${baseUrl}api/getClips`);
 

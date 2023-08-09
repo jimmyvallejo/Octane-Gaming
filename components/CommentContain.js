@@ -149,6 +149,7 @@ const Comment = ({ comments, authUser, index, setScroll, scroll }) => {
 
   return (
     <div className="flex items-start justify-start flex flex-col ml-5 mt-5 mb-5 ">
+      <Link className="cursor pointer" href={`${baseUrl}profile/${comments.ownerName}`}>
       <div className="flex">
         <Image
           src={comments.ownerPic}
@@ -159,6 +160,7 @@ const Comment = ({ comments, authUser, index, setScroll, scroll }) => {
         />
         <h1 className="text-white">{comments.ownerName}: </h1>
       </div>
+      </Link>
       <p className="min-w-[87%] max-w-[87%] rounded-md ml-11">
         {comments.post}
       </p>
@@ -180,7 +182,7 @@ const Comment = ({ comments, authUser, index, setScroll, scroll }) => {
           <div
             className={`overflow-y-scroll w-[90%] max-h-[50%]  rounded-md flex flex-col commentContain reply `}
           >
-            {getReplies.map((reply, index) => {
+            {getReplies.reverse().map((reply, index) => {
               return <Reply key={index} reply={reply} />;
             })}
           </div>
