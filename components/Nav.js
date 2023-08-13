@@ -1,12 +1,11 @@
 "use client";
 import Link from "next/link";
-import React, { use } from "react";
 import { AuthContext } from "./authProvider";
 import { ClipContext } from "./clipProvider";
 import { useContext } from "react";
 import Image from "next/image";
-import { InputAdornment, TextField } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
+import Search from "./Search";
+
 
 
 const Nav = () => {
@@ -26,38 +25,7 @@ const Nav = () => {
             onClick={getRandomClips}
           />
         </Link>
-        <div className="flex  w-[20%]">
-          <TextField
-            id="search"
-            type="search"
-            sx={{
-              width: "100%",
-              height: 40,
-              backgroundColor: "#191b1f",
-              ".MuiOutlinedInput-root": {
-                "& fieldset": {
-                  border: "none",
-                },
-                "&:hover fieldset": {
-                  border: "none",
-                },
-                "&.Mui-focused fieldset": {
-                  border: "none",
-                },
-                "& .MuiInputLabel-root": {
-                  color: "white",
-                },
-              },
-            }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end" sx={{ marginBottom: 2 }}>
-                  <SearchIcon sx={{ color: "grey" }} />
-                </InputAdornment>
-              ),
-            }}
-          />
-        </div>
+        <Search />
         {!authUser ? (
           <div className="p-3">
             <Link className="px-3" href="/signup">

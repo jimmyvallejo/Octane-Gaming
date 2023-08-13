@@ -14,11 +14,9 @@ export const Clip = ({ clip, index, lastClip, refreshCount, handleTop }) => {
   const { authUser, setAuthUser } = useContext(AuthContext);
   const [clipCurrent, setClipCurrent] = useState(clip);
   const { loading } = useContext(ClipContext);
-  const [views, setViews] = useState(clipCurrent.views);
-  const [likes, setLikes] = useState(clipCurrent.likes.length);
-  const [commentlength, setCommentLength] = useState(
-    clipCurrent.comments.length
-  );
+  const [views, setViews] = useState(null);
+  const [likes, setLikes] = useState(null);
+  const [commentlength, setCommentLength] = useState(null);
   const [comment, setComment] = useState(true);
   const [playing, setPlaying] = useState(true);
   const [heart, setHeart] = useState(null);
@@ -27,6 +25,13 @@ export const Clip = ({ clip, index, lastClip, refreshCount, handleTop }) => {
   const [commentText, setCommentText] = useState("");
   const [using, setUsing] = useState(null);
   const [followed, setFollowed] = useState(false);
+
+  useEffect(() => {
+   setClipCurrent(clip)
+   setViews(clip.views)
+   setLikes(clipCurrent.likes.length)
+   setCommentLength(clipCurrent.comments.length)
+  },[authUser, clip])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -54,8 +59,9 @@ export const Clip = ({ clip, index, lastClip, refreshCount, handleTop }) => {
 
   useEffect(() => {
     console.log("This is authuser:", authUser);
+    console.log("ClipCurrent" ,clipCurrent)
     if (authUser) {
-      if (authUser.following.includes(clipCurrent.ownerId._id)) {
+      if (authUser.following.includes(clipCurrent.ownerId._id) || authUser.following.includes(clip.ownerId)) {
         setFollowed(true);
       } else {
         setFollowed(false);
@@ -66,7 +72,11 @@ export const Clip = ({ clip, index, lastClip, refreshCount, handleTop }) => {
         setHeart(null);
       }
     }
-  }, [authUser]);
+  }, [authUser, clipCurrent]);
+
+
+
+
 
   const handleView = async () => {
     console.log(clip);

@@ -7,10 +7,11 @@ import { InputAdornment, TextField } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Image from "next/image";
 import Comment from "./CommentContain";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import Link from "next/link";
 import { useTheme } from "@mui/material/styles";
 import theme from "./materialUi/materialUi";
+import { ClipContext } from "./clipProvider";
 
 export default function SwipeableTemporaryDrawer({
   handleSubmitComment,
@@ -24,6 +25,7 @@ export default function SwipeableTemporaryDrawer({
   const [updatedClip, setUpdatedClip] = useState(null);
   const [scroll, setScroll] = useState(null);
   const [comments, setComments] = useState([])
+  const {clips} = useContext(ClipContext)
 
   const divRef = useRef();
 
@@ -38,8 +40,19 @@ export default function SwipeableTemporaryDrawer({
   const themed = useTheme(theme);
 
   useEffect(() => {
-    console.log(themed);
-  }, [themed]);
+    console.log("Checking for comments", clip);
+    const sorted = clip.comments.sort((a, b) => {
+      if (b.createdAt < a.createdAt) {
+        return -1; 
+      } else if (a.createdAt > b.createdAt) {
+        return 1; 
+      } else {
+        return 0; 
+      }
+    });
+    console.log("Sorted", sorted);
+    setComments(sorted);
+  }, [clip]);
 
   const [state, setState] = useState({
     top: false,
@@ -48,9 +61,9 @@ export default function SwipeableTemporaryDrawer({
     right: false,
   });
 
+
   useEffect(() => {
     setUpdatedClip(clip);
-    setComments(clip.comments.reverse())
   }, [using]);
 
   useEffect(() => {

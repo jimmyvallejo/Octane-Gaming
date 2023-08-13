@@ -161,7 +161,7 @@ const Comment = ({ comments, authUser, index, setScroll, scroll }) => {
         <h1 className="text-white">{comments.ownerName}: </h1>
       </div>
       </Link>
-      <p className="min-w-[87%] max-w-[87%] rounded-md ml-11">
+      <p className="min-w-[90%] max-w-[90%] rounded-md pl-11">
         {comments.post}
       </p>
       <div className="flex items-center mt-2.5 ml-1">

@@ -28,9 +28,13 @@ const UserSchema = new Schema(
     liked: [{ type: Schema.Types.ObjectId, ref: "Video" }],
     followers: [{ type: Schema.Types.ObjectId, ref: "User" }],
     following: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    activity: [{
+      kind: {type: String } ,
+      user: { type: Schema.Types.ObjectId, ref: "User" },
+      video: { type: Schema.Types.ObjectId, ref: "Video" }
+    }],
   },
   {
-    timeseries: true,
     timestamps: true,
   }
 );

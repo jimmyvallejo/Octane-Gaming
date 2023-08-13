@@ -1,6 +1,7 @@
 import { connectToDB } from "@utils/database";
 import Video from "@models/video";
 import Comment from "@models/comment";
+import { User } from "../models";
 
 export const POST = async (req) => {
   const { owner, post, clipId, ownerName, ownerPic } = await req.json();
@@ -23,7 +24,20 @@ export const POST = async (req) => {
       clipId,
       { $push: { comments: newComment._id } },
       { new: true }
-    ).populate("comments");
+    ).populate("comments").populate('ownerId')
+
+    console.log(addToVideo)
+
+
+    const activityUpdate = {kind: "comment" , user: owner, video: addToVideo._id}
+
+    const addToActivity = await User.findByIdAndUpdate(
+      addToVideo.ownerId._id,
+      { $push: { activity: activityUpdate} },
+      { new: true }
+    )
+
+    console.log(addToActivity)
 
     return new Response(
       JSON.stringify({

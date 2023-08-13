@@ -61,6 +61,9 @@ const Dropzone = ({ className }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    
+
     const file = files[0];
     try {
       if (!file) return;
@@ -88,13 +91,26 @@ const Dropzone = ({ className }) => {
 
       console.log("Post to Cloudinary:", result.data);
 
-      const videoObj = {
+
+     let videoObj;
+
+     description.length > 0 ?  videoObj = {
         ownerId: authUser.id,
         ownerName: authUser.username,
         url: result.data.url,
         description: description,
         image: authUser.image,
-      };
+      } 
+      : 
+      videoObj = {
+        ownerId: authUser.id,
+        ownerName: authUser.username,
+        url: result.data.url,
+        description: "No description",
+        image: authUser.image,
+      } 
+
+      console.log(videoObj)
 
       const postedToDb = await axios.post(`${baseUrl}api/fileUpload`, videoObj);
 

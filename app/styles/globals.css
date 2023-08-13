@@ -92,7 +92,13 @@ body {
 
 .search{
   margin-left: 200px !important;
+
   
+}
+
+.searchResult {
+  background-color: #191b1f !important;
+  top: 51px;
 }
 
 .pointer {
