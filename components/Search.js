@@ -108,9 +108,9 @@ const Search = () => {
           <div>
             
             {videoResult.length === 0 && userResult.length === 0 && (
-              <h1 className="text-center mt-10">Nothing to display....</h1>
+              <h1 className="text-center mt-10">No results found....</h1>
             )}
-            <div className="mt-10">
+            <div className="mt-5">
               {videoResult.length > 0 && (
                 <div className="mt-3 flex flex-col items-center w-full">
                   <h1 className=" text-xl border-b w-[20%] text-center font-light mb-3">Videos</h1>

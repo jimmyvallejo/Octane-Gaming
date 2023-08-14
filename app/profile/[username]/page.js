@@ -35,7 +35,12 @@ const Profile = () => {
         );
         console.log(profile.data);
         setProfileDetails(profile.data);
-        setCurrent(profile.data.activity);
+        if(authUser && params.username === authUser.username){
+        setCurrent(profile.data.activity.reverse());
+        } else { 
+          setCurrent(profile.data.videos);
+          setSelected('videos')
+        }
       } catch (error) {
         console.log(error);
       }
@@ -125,7 +130,9 @@ const Profile = () => {
         </h1>
       </div>
       <div className="mt-9 text-xl flex flex-row border-b border-slate-700  ">
-        <button
+      {authUser && params.username === authUser.username && 
+        <div className="ml-3">
+          <button
           onClick={handleActivity}
           className={`ml-3 mb-2 ${
             selected === "activity" ? "text-white border-b" : "text-gray-500"
@@ -133,9 +140,11 @@ const Profile = () => {
         >
           Activity
         </button>
+        </div>
+          }
         <button
           onClick={handleVideos}
-          className={`ml-3 mb-2 ${
+          className={`ml-5 mb-2 ${
             selected === "videos" ? "text-white border-b" : "text-gray-500"
           }  hover:text-white`}
         >
@@ -143,7 +152,7 @@ const Profile = () => {
         </button>
         <button
           onClick={handleLikes}
-          className={`ml-6 mb-2 ${
+          className={`ml-5 mb-2 ${
             selected === "likes" ? "text-white border-b" : "text-gray-500"
           } hover:text-white`}
         >
@@ -152,6 +161,7 @@ const Profile = () => {
       </div>
 
       <div className="flex flex-row flex-wrap">
+        {selected === "activity" && <h1 className="ml-5 mt-4 text-xl">Recent:</h1> }
         {selected === "videos" &&
           current.map((clip) => {
             return <MiniPlayer clip={clip} key={clip.id} />;
@@ -161,6 +171,7 @@ const Profile = () => {
             return <MiniPlayer clip={clip} key={clip.id} />;
           })}
       </div>
+      
       {selected === "activity" &&
         current.map((item) => {
           return (
@@ -170,7 +181,7 @@ const Profile = () => {
                   alt="video picture"
                   width={40}
                   height={40}
-                  src={item.kind === "comment" ? }
+                  src={item.kind === "comment" ? `/assets/icons/chat.png` : `/assets/icons/heart.png` }
                 />
                 <p className="ml-3">
                   {item.user.username} left a {item.kind} on your{" "}

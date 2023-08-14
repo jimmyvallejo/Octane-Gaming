@@ -23,6 +23,8 @@ export const POST = async (req) => {
         { new: true }
       ).populate("comments");
 
+     
+
       return new Response(
         JSON.stringify({
           removed: true,
@@ -43,6 +45,17 @@ export const POST = async (req) => {
         { $push: { likes: userId } },
         { new: true }
       ).populate("comments");
+
+ 
+      const activityUpdate = {kind: "like" , user: userId, video: clipId}
+
+      const addToActivity = await User.findByIdAndUpdate(
+        userId,
+        { $push: { activity: activityUpdate} },
+        { new: true }
+      )
+
+      console.log(addToActivity)
 
       return new Response(
         JSON.stringify({
