@@ -72,12 +72,12 @@ const ClipInfo = ({
             
           )}
         </div>
-        <div className="  flex flex-col lg:flex-row justify-around w-[30%] items-start ">
-          <div className={`mr-2 flex flex-row items-center justify-center`}>
+        <div className="  flex flex-col lg:flex-row justify-around w-[25%] items-start mr-4 ">
+          <div className={`mr-2 flex flex-row items-center justify-center mt-1`}>
             <Image
               src="/assets/images/play-button.png"
-              width={40}
-              height={40}
+              width={30}
+              height={30}
               alt="views"
             />
 
@@ -92,21 +92,21 @@ const ClipInfo = ({
                     ? `/assets/icons/heart.png`
                     : `https://www.svgrepo.com/show/397697/red-heart.svg`
                 }
-                width={40}
-                height={40}
+                width={!heart ? "33" : "28"}
+                height={33}
                 alt="likes"
-                className="mr-2 cursor-pointer mt-1"
+                className={`mr-2 cursor-pointer ${!heart ? "mt-1" : "mt-1.5"}`}
                 onClick={handleLike}
               />
-              <h3 className="text-l">{likes}</h3>
+              <h3 className="text-l mt-1">{likes}</h3>
             </div>
           )}
           {!authUser && (
             <div className="flex items-center flex-row">
               <Image
                 src={`/assets/icons/heart.png`}
-                width={43}
-                height={43}
+                width={33}
+                height={33}
                 alt="likes"
                 className=""
               />
@@ -114,11 +114,11 @@ const ClipInfo = ({
             </div>
           )}
 
-          <div className="flex flex-row items-center ">
+          <div className="flex flex-row items-center mt-1 ">
             <Image
               src={`/assets/icons/chat.png`}
-              width={`45`}
-              height={`45`}
+              width={33}
+              height={33}
               alt="comments"
               className="mr-2 ml-1"
             />
