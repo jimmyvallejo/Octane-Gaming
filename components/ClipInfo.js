@@ -51,6 +51,8 @@ const ClipInfo = ({
             </div>
           </Link>
           {authUser && authUser.id !== clipCurrent.ownerId._id && (
+              <div>
+                {authUser.username !== clipCurrent.ownerName && 
             <Button
               className=" ml-5 h-10 mt-2 followbutton"
               variant={!followed ? "outlined" : "outlined"}
@@ -65,9 +67,12 @@ const ClipInfo = ({
             >
               {!followed ? "Follow" : "Unfollow"}
             </Button>
+            }
+            </div>
+            
           )}
         </div>
-        <div className="  flex flex-row justify-around w-[30%] items-start ">
+        <div className="  flex flex-col lg:flex-row justify-around w-[30%] items-start ">
           <div className={`mr-2 flex flex-row items-center justify-center`}>
             <Image
               src="/assets/images/play-button.png"

@@ -11,6 +11,7 @@ import MiniPlayer from "@components/MiniPlayer";
 import { useParams } from "next/navigation";
 import ProfileModal from "@components/Modal";
 import { useRouter } from "next/navigation";
+import { Activity } from "@components/Activity";
 
 const Profile = () => {
   const { authUser, session } = useContext(AuthContext);
@@ -75,6 +76,18 @@ const Profile = () => {
     router.push("/");
   };
 
+  const [date, setDate] = useState("")
+
+  useEffect(() => {
+    if(profileDetails){
+    const currentDate = new Date();
+    const timeStamp = new Date(profileDetails.createdAt);
+    const oneDay = 24 * 60 * 60 * 1000; 
+     const differenceInDays = Math.floor((currentDate - timeStamp) / oneDay).toString();
+     setDate(differenceInDays)
+    }
+  },[profileDetails])
+
   return profileDetails ? (
     <div className="flex flex-col w-[86%] ml-[14%] h-screen">
       <ProfileModal
@@ -95,7 +108,8 @@ const Profile = () => {
         />
         <div className="flex flex-col ml-10">
           <h1 className="text-4xl">{profileDetails.username}</h1>
-          <h1 className="text-xl mt-2">{profileDetails.email}</h1>
+         {authUser && authUser.id === profileDetails._id && <h1 className="text-xl mt-2">{profileDetails.email}</h1>}
+         <h1 className="mt-2 text-gray-400 text-sm">Joined {date}d ago</h1>
           {authUser && params.username === authUser.username && (
             <Button
               className="mr-5 h-10 mt-3 followbutton"
@@ -175,25 +189,7 @@ const Profile = () => {
       {selected === "activity" &&
         current.map((item) => {
           return (
-            <div className="flex flex-col my-2 " key={item._id}>
-              <div className="flex items-center pl-5">
-                <Image
-                  alt="video picture"
-                  width={40}
-                  height={40}
-                  src={item.kind === "comment" ? `/assets/icons/chat.png` : `/assets/icons/heart.png` }
-                />
-                <p className="ml-3">
-                  {item.user.username} left a {item.kind} on your{" "}
-                  <span
-                    className="border-b cursor-pointer font-semibold"
-                    onClick={() => handleClip(item.video)}
-                  >
-                    video
-                  </span>{" "}
-                </p>
-              </div>
-            </div>
+           <Activity key={item.id} item={item} handleClip={handleClip}/>
           );
         })}
     </div>

@@ -23,7 +23,13 @@ export const POST = async (req) => {
         { new: true }
       ).populate("comments");
 
-     
+      const removeFromActivity = await User.findByIdAndUpdate(
+        { _id: removedVideoLike.ownerId },
+        { $pull: { activity: { kind: "like", user: removedLike._id, video: clipId } } },
+        { new: true }
+      );
+
+      console.log("Removed activity:", removeFromActivity)
 
       return new Response(
         JSON.stringify({
@@ -46,16 +52,15 @@ export const POST = async (req) => {
         { new: true }
       ).populate("comments");
 
- 
-      const activityUpdate = {kind: "like" , user: userId, video: clipId}
+      const activityUpdate = { kind: "like", user: userId, video: clipId };
 
       const addToActivity = await User.findByIdAndUpdate(
         addVideoLike.ownerId,
-        { $push: { activity: activityUpdate} },
+        { $push: { activity: activityUpdate } },
         { new: true }
-      )
-
-      console.log(addToActivity)
+      );
+      console.log(addLike);
+      console.log("Added activity:", addToActivity);
 
       return new Response(
         JSON.stringify({
