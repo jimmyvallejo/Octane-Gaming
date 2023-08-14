@@ -50,7 +50,7 @@ export const POST = async (req) => {
       const activityUpdate = {kind: "like" , user: userId, video: clipId}
 
       const addToActivity = await User.findByIdAndUpdate(
-        userId,
+        addVideoLike.ownerId,
         { $push: { activity: activityUpdate} },
         { new: true }
       )
